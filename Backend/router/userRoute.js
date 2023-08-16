@@ -3,7 +3,7 @@ const User = require("../model/User");
 const jwt = require("jsonwebtoken");
 
 // New User
-router.post("/register", async (req, res) => {
+router.post("/reg", async (req, res) => {
   // Validating Data
   if (!req.body) return res.status(400).send("Error in Data");
 
@@ -31,7 +31,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Login
-router.post("/login", async (req, res) => {
+router.post("/log", async (req, res) => {
   // Validating Data
   if (!req.body) return res.status(400).send("Error in Data");
 
@@ -53,7 +53,7 @@ router.post("/login", async (req, res) => {
   // res.send('Logged In');
 });
 
-router.get("/all-user", async (req, res) => {
+router.get("/all", async (req, res) => {
   const users = await User.find();
   if (users) {
     res.send({
@@ -63,6 +63,21 @@ router.get("/all-user", async (req, res) => {
   } else {
     res.send("Error in Fetching Data.");
   }
+});
+
+router.get("/all", (req, res) => {
+  User.findById(req.params.id, (err, product) => {
+    if (err) {
+      console.log(err);
+      res
+        .status(500)
+        .send(
+          `An error occurred while fetching the product with id ${req.params.id}.`
+        );
+    } else {
+      res.send(product);
+    }
+  });
 });
 
 module.exports = router;

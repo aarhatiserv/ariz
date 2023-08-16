@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import SwiperCore, { Autoplay } from "swiper";
 import "swiper/css";
+import axios from "axios";
 
 function HomePageBanner() {
   SwiperCore.use([Autoplay]);
+  const [banners, setBanners] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/banner/banner`)
+      .then((res) => {
+        console.log(res.data);
+
+        setBanners(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <div>
       <div className=" ">
@@ -19,20 +34,23 @@ function HomePageBanner() {
             loop={true}
             className="mySwiper"
           >
-            <SwiperSlide>
-              <div className="lg:flex md:flex block  justify-center">
-                <div className="flex "></div>
+            {" "}
+            {banners.map((banner, index) => (
+              <SwiperSlide>
+                <div className="lg:flex md:flex block  justify-center">
+                  <div className="flex "></div>
 
-                <div>
-                  <img
-                    src="/div.ecommerce-home.png"
-                    alt="banner"
-                    className="h-[200px] sm:h-full"
-                  />
+                  <div>
+                    <img
+                      src={banner.imageUrl}
+                      alt="banner"
+                      className=" h-[200px] object-fit sm:h-full"
+                    />
+                  </div>
                 </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
+              </SwiperSlide>
+            ))}
+            {/* <SwiperSlide>
               <div className="lg:flex md:flex block justify-center">
                 <div className="flex "></div>
 
@@ -44,7 +62,7 @@ function HomePageBanner() {
                   />
                 </div>
               </div>
-            </SwiperSlide>
+            </SwiperSlide> */}
           </Swiper>
         </div>
       </div>

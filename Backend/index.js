@@ -3,16 +3,26 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const paymentRoute = require("./controller/payment");
 
 const userRoute = require("./router/userRoute");
 const newArrival = require("./router/newArrival");
+const authRoute = require("./router/authRoute");
+const userProduct = require("./router/userProduct");
 
 const trending = require("./router/trending");
+const product = require("./router/product");
 const coupon = require("./router/coupon");
-
+const category = require("./router/category");
+const cart = require("./router/cart");
+const banner = require("./router/banner");
+const banner2 = require("./router/banner2");
+const orders = require("./router/orders");
+const email = require("./email");
+const ShipDetail = require("./ShipDetail");
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 const port = process.env.PORT || 5000;
 
@@ -27,11 +37,21 @@ mongoose.connect(uri, { useNewUrlParser: true }, () =>
 app.use(express.json());
 
 //Route Middlewares
-
+app.use("/api/razorpay", paymentRoute);
 app.use("/api/user", userRoute);
+app.use("/api/auth", authRoute);
 app.use("/api/newArrival", newArrival);
+app.use("/api/userProduct", userProduct);
 app.use("/api/trending", trending);
-app.use("/api/coupons", coupon);
+app.use("/api/product", product);
+app.use("/api/coupon", coupon);
+app.use("/api/category", category);
+app.use("/api/cart", cart);
+app.use("/api/banner", banner);
+app.use("/api/banner2", banner2);
+app.use("/api/order", orders);
+app.use("/api/email", email);
+app.use("/api/mail", ShipDetail);
 
 // Callback function to listen to changes unless manually exited.
 app.listen(port, () => {

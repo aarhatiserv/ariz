@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -7,24 +8,25 @@ function Footer() {
         <div class="max-w-screen-2xl mx-auto px-4 sm:px-6  py-12 text-gray-800 flex flex-wrap justify-center flex justify-between">
           <div class="p-5">
             <div class="text-2xl font-bold  text-white ">Quick Link</div>
-            <a class="my-3 block text-gray-100 " href="/#">
+            <Link to="/about" class="my-3 block text-gray-100 " href="/#">
               About <span class="text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Product <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Responsibility <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
+            </Link>
+            <Link to="/privacy" class="my-3 block text-gray-100 " href="/#">
+              Privacy Policy<span class="text-teal-600 text-xs p-1"></span>
+            </Link>
+            <Link to="/term" class="my-3 block text-gray-100 " href="/#">
+              Terms & Conditions <span class="text-teal-600 text-xs p-1"></span>
+            </Link>
+            <Link to="/career" class="my-3 block text-gray-100 " href="/#">
               Career <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Press <span class="text-teal-600 text-xs p-1">New</span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Image Bank <span class="text-teal-600 text-xs p-1"></span>
-            </a>
+            </Link>
+            <Link to="/guide" class="my-3 block text-gray-100 " href="/#">
+              Guide <span class="text-teal-600 text-xs p-1">New</span>
+            </Link>
+            <Link to="/refund" class="my-3 block text-gray-100 " href="/#">
+              Cancellation & Refund Policies{" "}
+              <span class="text-teal-600 text-xs p-1"></span>
+            </Link>
           </div>
           <div class="p-5">
             <div class="text-2xl font-bold   text-white ">Customer Service</div>

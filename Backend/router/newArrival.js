@@ -29,12 +29,25 @@ router.get("/newarrival", (req, res) => {
 });
 
 router.post("/newarrival", (req, res) => {
-  const { productName, category, price, imageUrl } = req.body;
+  const {
+    productName,
+    category,
+    size,
+    price,
+    imageUrl,
+    description,
+    information,
+    review,
+  } = req.body;
 
   const product = new Product({
     productName,
     category,
     price,
+    size,
+    description,
+    information,
+    review,
     imageUrl,
   });
 
@@ -49,7 +62,16 @@ router.post("/newarrival", (req, res) => {
 });
 
 router.put("/newarrival", (req, res) => {
-  const { productName, category, price, imageUrl } = req.body;
+  const {
+    productName,
+    category,
+    price,
+    size,
+    imageUrl,
+    description,
+    information,
+    review,
+  } = req.body;
 
   Product.findByIdAndUpdate(
     req.params.id,
@@ -57,7 +79,10 @@ router.put("/newarrival", (req, res) => {
       productName,
       category,
       price,
-
+      size,
+      description,
+      information,
+      review,
       imageUrl,
     },
     (err, product) => {

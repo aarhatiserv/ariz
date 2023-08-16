@@ -11,7 +11,18 @@ const newArrivalSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-
+  size: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+  information: {
+    type: String,
+  },
+  review: {
+    type: String,
+  },
   imageUrl: {
     type: String,
   },

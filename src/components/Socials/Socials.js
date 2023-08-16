@@ -1,27 +1,27 @@
 import React from "react";
 
 function Socials() {
-  fetch("https://www.instagram.com/ariz.garments/?igshid=MzRlODBiNWFlZA%3D%3D")
-    .then((response) => response.json())
-    .then((data) => {
-      const posts = data.graphql.user.edge_owner_to_timeline_media.edges;
+  // fetch("https://www.instagram.com/ariz.garments/?igshid=MzRlODBiNWFlZA%3D%3D")
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     const posts = data.graphql.user.edge_owner_to_timeline_media.edges;
 
-      // Display embedded posts
-      const instagramPosts = document.getElementById("instagram-posts");
-      posts.forEach((post) => {
-        const imgUrl = post.node.display_url;
-        const caption = post.node.edge_media_to_caption.edges[0].node.text;
+  //     // Display embedded posts
+  //     const instagramPosts = document.getElementById("instagram-posts");
+  //     posts.forEach((post) => {
+  //       const imgUrl = post.node.display_url;
+  //       const caption = post.node.edge_media_to_caption.edges[0].node.text;
 
-        const postElement = document.createElement("div");
-        postElement.innerHTML = `
-              <img src="${imgUrl}" alt="Instagram post"/>
-              <p>${caption}</p>
-          `;
+  //       const postElement = document.createElement("div");
+  //       postElement.innerHTML = `
+  //             <img src="${imgUrl}" alt="Instagram post"/>
+  //             <p>${caption}</p>
+  //         `;
 
-        instagramPosts.appendChild(postElement);
-      });
-    })
-    .catch((error) => console.log(error));
+  //       instagramPosts.appendChild(postElement);
+  //     });
+  //   })
+  //   .catch((error) => console.log(error));
   return (
     <div>
       <div className=" md:py-0  py-0 ">
