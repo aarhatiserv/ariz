@@ -59,7 +59,6 @@ const App = () => {
         <Route path="/refund" element={<Refund />} />
         <Route path="/order" element={<OrderPage />} />
       </Routes>
-
       <Socials />
       <Footer />
     </>
