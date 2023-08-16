@@ -17,7 +17,7 @@ function SignUp() {
     console.log(user);
 
     axios
-      .post("http://localhost:5000/api/user/reg", user)
+      .post("https://ariz.onrender.com/api/user/reg", user)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {

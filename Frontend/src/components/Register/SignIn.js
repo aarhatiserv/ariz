@@ -17,7 +17,7 @@ function SignIn() {
 
   const handleLogin = () => {
     axios
-      .post("http://localhost:5000/api/user/log", user)
+      .post("https://ariz.onrender.com/api/user/log", user)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {

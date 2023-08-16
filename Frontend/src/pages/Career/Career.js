@@ -22,7 +22,7 @@ function Career() {
       resume: e.target.elements.resume.value,
     };
     console.log(details);
-    let response = await fetch("http://localhost:5000/api/email/email", {
+    let response = await fetch("https://ariz.onrender.com/api/email/email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",

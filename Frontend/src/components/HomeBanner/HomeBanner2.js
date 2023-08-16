@@ -8,7 +8,7 @@ function HomeBanner2() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/banner2/banner2?limit=${showCount}`)
+      .get(`https://ariz.onrender.com/api/banner2/banner2?limit=${showCount}`)
       .then((res) => {
         console.log(res.data);
 

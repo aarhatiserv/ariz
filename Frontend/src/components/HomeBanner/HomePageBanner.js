@@ -12,7 +12,7 @@ function HomePageBanner() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/banner/banner`)
+      .get(`https://ariz.onrender.com/api/banner/banner`)
       .then((res) => {
         console.log(res.data);
 

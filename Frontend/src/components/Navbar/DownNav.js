@@ -70,7 +70,7 @@ function DownNav() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/category/category`)
+      .get(`https://ariz.onrender.com/api/category/category`)
       .then((res) => {
         setCategories(res.data);
       })
@@ -91,7 +91,7 @@ function DownNav() {
     };
     var id = localStorage.getItem("id");
     await axios
-      .post(`http://localhost:5000/api/cart/cart/${id}`, cart)
+      .post(`https://ariz.onrender.com/api/cart/cart/${id}`, cart)
       .then((res) => {
         setCarts(res.data);
         setCartCount((prevCount) => {

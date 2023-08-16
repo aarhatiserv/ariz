@@ -52,7 +52,7 @@ function ProductDetail({ products, onClose }) {
 
     var id = localStorage.getItem("id");
     await axios
-      .post(`http://localhost:5000/api/cart/cart/${id}`, cart)
+      .post(`https://ariz.onrender.com/api/cart/cart/${id}`, cart)
       .then((res) => {
         setCarts(res.data);
         console.log(res.data);

@@ -40,7 +40,7 @@ function Checkout({ cart }) {
     var total = 0;
     var id = localStorage.getItem("id");
     axios
-      .get(`http://localhost:5000/api/cart/cart/${id}`)
+      .get(`https://ariz.onrender.com/api/cart/cart/${id}`)
       .then((res) => {
         console.log(res.data);
         setCartProducts(res.data.cart);
@@ -84,7 +84,9 @@ function Checkout({ cart }) {
   const handleDelete = async (itemId) => {
     try {
       const id = localStorage.getItem("id");
-      await axios.delete(`http://localhost:5000/api/cart/cart/${id}/${itemId}`);
+      await axios.delete(
+        `https://ariz.onrender.com/api/cart/cart/${id}/${itemId}`
+      );
       fetchData(); // Fetch updated cart data after successful deletion
 
       Swal.fire({
@@ -109,7 +111,7 @@ function Checkout({ cart }) {
   const handleCouponCode = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/coupon/coupon/${couponCode}`
+        `https://ariz.onrender.com/api/coupon/coupon/${couponCode}`
       );
 
       if (response.data.discount) {
@@ -158,7 +160,7 @@ function Checkout({ cart }) {
     } else {
       try {
         const response = await axios.post(
-          `http://localhost:5000/api/razorpay/create-order`,
+          `https://ariz.onrender.com/api/razorpay/create-order`,
           {
             amount: amount * 100,
             receipt: shortid.generate(),
@@ -187,7 +189,7 @@ function Checkout({ cart }) {
               try {
                 // Create the order on the server
                 const response = await axios.post(
-                  "http://localhost:5000/api/order/orders",
+                  "https://ariz.onrender.com/api/order/orders",
                   {
                     userDetails,
                     totalPrice,

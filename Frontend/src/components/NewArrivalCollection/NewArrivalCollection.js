@@ -26,7 +26,7 @@ function NewArrivalCollection() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5000/api/userProduct/userProduct?limit=${showCount}`
+        `https://ariz.onrender.com/api/userProduct/userProduct?limit=${showCount}`
       )
       .then((res) => {
         console.log(res.data); // Debug: Check the entire response data
@@ -60,7 +60,7 @@ function NewArrivalCollection() {
     };
     var id = localStorage.getItem("id");
     await axios
-      .post(`http://localhost:5000/api/cart/cart/${id}`, cart)
+      .post(`https://ariz.onrender.com/api/cart/cart/${id}`, cart)
       .then((res) => {
         setCarts(res.data);
         console.log(res.data);

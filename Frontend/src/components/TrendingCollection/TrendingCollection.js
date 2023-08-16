@@ -26,7 +26,7 @@ function TrendingCollection() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5000/api/userProduct/userProduct?limit=${showCount}`
+        `https://ariz.onrender.com/api/userProduct/userProduct?limit=${showCount}`
       )
       .then((res) => {
         console.log(res.data); // Debug: Check the entire response data
@@ -58,7 +58,7 @@ function TrendingCollection() {
       };
 
       const response = await axios.post(
-        `http://localhost:5000/api/cart/cart/${id}`,
+        `https://ariz.onrender.com/api/cart/cart/${id}`,
         cart
       );
       console.log(response.data);
