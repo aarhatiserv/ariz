@@ -113,7 +113,6 @@ module.exports = router;
 
 // const router = require("express").Router();
 const nodemailer = require("nodemailer");
-const shortid = require("shortid");
 
 // router.use((req, res, next) => {
 //   // Middleware logic here

@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
-import { GoogleLogin } from "react-google-login";
+// import { GoogleLogin } from "react-google-login";
 
 function SignIn() {
   const [showBirthdayCelebration, setShowBirthdayCelebration] = useState(false);
@@ -48,16 +48,16 @@ function SignIn() {
     });
   };
 
-  const responseGoogle = (response) => {
-    if (response && response.profileObj) {
-      setUser({
-        email: response.profileObj.email,
-        password: "",
-      });
+  // const responseGoogle = (response) => {
+  //   if (response && response.profileObj) {
+  //     setUser({
+  //       email: response.profileObj.email,
+  //       password: "",
+  //     });
 
-      handleLogin();
-    }
-  };
+  //     handleLogin();
+  //   }
+  // };
 
   return (
     <div>
@@ -85,7 +85,7 @@ function SignIn() {
                 </div>
 
                 <div class="mt-5">
-                  <GoogleLogin
+                  {/* <GoogleLogin
                     clientId="543911932766-cq750g05dir8g2pd3qrtt8kkskulkvjl.apps.googleusercontent.com"
                     buttonText="Sign in with Google"
                     onSuccess={responseGoogle}
@@ -124,127 +124,125 @@ function SignIn() {
                         Sign in with Google
                       </button>
                     )}
-                  />
+                  /> */}
 
                   <div class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 ">
                     Or
                   </div>
 
-                
-                    <div class="grid gap-y-4">
-                      <div>
-                        <label
-                          for="email"
-                          class="block text-sm mb-2 dark:text-white"
-                        >
-                          Email address
-                        </label>
-                        <div class="relative">
-                          <input
-                            type="email"
-                            value={user.email}
-                            onChange={(e) =>
-                              setUser({ ...user, email: e.target.value })
-                            }
-                            id="email"
-                            placeholder="Email"
-                            class="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
-                            required
-                            aria-describedby="email-error"
-                          />
-                          <div class="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                            <svg
-                              class="h-5 w-5 text-red-500"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              viewBox="0 0 16 16"
-                              aria-hidden="true"
-                            >
-                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                            </svg>
-                          </div>
-                        </div>
-                        <p
-                          class="hidden text-xs text-red-600 mt-2"
-                          id="email-error"
-                        >
-                          Please include a valid email address so we can get
-                          back to you
-                        </p>
-                      </div>
-
-                      <div>
-                        <div class="flex justify-between items-center">
-                          <label for="password" class="block text-sm mb-2 ">
-                            Password
-                          </label>
-                          <a
-                            class="text-sm text-blue-600 decoration-2 hover:underline font-medium"
-                            href="../examples/html/recover-account.html"
-                          >
-                            Forgot password?
-                          </a>
-                        </div>
-                        <div class="relative">
-                          <input
-                            type="password"
-                            name="password"
-                            id="password"
-                            placeholder="Password"
-                            value={user.password}
-                            onChange={(e) =>
-                              setUser({ ...user, password: e.target.value })
-                            }
-                            class="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
-                            required
-                            aria-describedby="password-error"
-                          />
-                          <div class="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                            <svg
-                              class="h-5 w-5 text-red-500"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              viewBox="0 0 16 16"
-                              aria-hidden="true"
-                            >
-                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                            </svg>
-                          </div>
-                        </div>
-                        <p
-                          class="hidden text-xs text-red-600 mt-2"
-                          id="password-error"
-                        >
-                          8+ characters required
-                        </p>
-                      </div>
-
-                      <div class="flex items-center">
-                        <div class="flex">
-                          <input
-                            id="remember-me"
-                            name="remember-me"
-                            type="checkbox"
-                            class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 "
-                          />
-                        </div>
-                        <div class="ml-3">
-                          <label for="remember-me" class="text-sm ">
-                            Remember me
-                          </label>
-                        </div>
-                      </div>
-
-                      <button
-                        onClick={handleLogin}
-                        class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                  <div class="grid gap-y-4">
+                    <div>
+                      <label
+                        for="email"
+                        class="block text-sm mb-2 dark:text-white"
                       >
-                        Sign in
-                      </button>
+                        Email address
+                      </label>
+                      <div class="relative">
+                        <input
+                          type="email"
+                          value={user.email}
+                          onChange={(e) =>
+                            setUser({ ...user, email: e.target.value })
+                          }
+                          id="email"
+                          placeholder="Email"
+                          class="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
+                          required
+                          aria-describedby="email-error"
+                        />
+                        <div class="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                          <svg
+                            class="h-5 w-5 text-red-500"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            viewBox="0 0 16 16"
+                            aria-hidden="true"
+                          >
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                          </svg>
+                        </div>
+                      </div>
+                      <p
+                        class="hidden text-xs text-red-600 mt-2"
+                        id="email-error"
+                      >
+                        Please include a valid email address so we can get back
+                        to you
+                      </p>
                     </div>
-              
+
+                    <div>
+                      <div class="flex justify-between items-center">
+                        <label for="password" class="block text-sm mb-2 ">
+                          Password
+                        </label>
+                        <a
+                          class="text-sm text-blue-600 decoration-2 hover:underline font-medium"
+                          href="../examples/html/recover-account.html"
+                        >
+                          Forgot password?
+                        </a>
+                      </div>
+                      <div class="relative">
+                        <input
+                          type="password"
+                          name="password"
+                          id="password"
+                          placeholder="Password"
+                          value={user.password}
+                          onChange={(e) =>
+                            setUser({ ...user, password: e.target.value })
+                          }
+                          class="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
+                          required
+                          aria-describedby="password-error"
+                        />
+                        <div class="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                          <svg
+                            class="h-5 w-5 text-red-500"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            viewBox="0 0 16 16"
+                            aria-hidden="true"
+                          >
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                          </svg>
+                        </div>
+                      </div>
+                      <p
+                        class="hidden text-xs text-red-600 mt-2"
+                        id="password-error"
+                      >
+                        8+ characters required
+                      </p>
+                    </div>
+
+                    <div class="flex items-center">
+                      <div class="flex">
+                        <input
+                          id="remember-me"
+                          name="remember-me"
+                          type="checkbox"
+                          class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 "
+                        />
+                      </div>
+                      <div class="ml-3">
+                        <label for="remember-me" class="text-sm ">
+                          Remember me
+                        </label>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={handleLogin}
+                      class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                    >
+                      Sign in
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
