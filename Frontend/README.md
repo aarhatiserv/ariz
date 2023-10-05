@@ -1,2 +1,0 @@
-# ariz
-single vendor website
