@@ -1,0 +1,68 @@
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+  scroll-behavior: smooth;
+}
+
+
+.sticky-container {
+  position: sticky;
+  top: 0;
+  /* background-color: transparent; */
+
+  z-index: 999;
+  /* Optional: If you want the sticky element to appear above other content */
+  /* Add any other styles you want for the sticky container here */
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: end;
+  padding: 0rem 0;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination li {
+  margin-right: 10px;
+}
+
+.pagination li:last-child {
+  margin-right: 0;
+}
+
+.pagination a {
+  padding: 6px 12px;
+  border: 1px solid #7a7a7a;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #474747;
+  cursor: pointer;
+}
+
+.pagination a:hover {
+  background-color: #f4f4f4;
+}
+
+.pagination .active a {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+  cursor: default;
+}
+
+.pagination .disabled a {
+  color: #aaa;
+  cursor: not-allowed;
+}
