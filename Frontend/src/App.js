@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Navbar2 from "./components/Navbar2/Navbar2";
 import Navbar1 from "./components/Navbar/DownNav";
+import ScrollToTop from "./ScrollToTop";
 import "./App.css";
 
 import {
@@ -22,6 +23,7 @@ import {
 } from "./pages/index";
 import ReadBlog from "./pages/BlogPost/ReadBlog";
 import Career from "./pages/Career/Career";
+import Fav from "./pages/Fav/FavPage";
 import Privacy from "./pages/Privacy/Privacy";
 import Terms from "./pages/Terms/Terms";
 import Guide from "./pages/Guide/Guide";
@@ -31,6 +33,7 @@ import Footer from "./components/Footer/Footer";
 const App = () => {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <Navbar2 />
       <Navbar1 />
@@ -56,6 +59,7 @@ const App = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/term" element={<Terms />} />
         <Route path="/guide" element={<Guide />} />
+        <Route path="/fav" element={<Fav />} />
         <Route path="/refund" element={<Refund />} />
         <Route path="/order" element={<OrderPage />} />
       </Routes>

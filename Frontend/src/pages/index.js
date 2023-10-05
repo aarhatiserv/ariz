@@ -16,6 +16,7 @@ import Terms from "./Terms/Terms";
 import Guide from "./Guide/Guide";
 import Refund from "./Refund/Refund";
 import OrderPage from "./Order/OrderPage";
+import FavPage from "./Fav/FavPage";
 
 export {
   HomePage,
@@ -35,4 +36,5 @@ export {
   Guide,
   Refund,
   OrderPage,
+  FavPage,
 };

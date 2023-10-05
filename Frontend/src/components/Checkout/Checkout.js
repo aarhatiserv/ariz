@@ -42,7 +42,7 @@ function Checkout({ cart }) {
     axios
       .get(`https://ariz.onrender.com/api/cart/cart/${id}`)
       .then((res) => {
-        console.log(res.data);
+        console.log("API Response:", res.data);
         setCartProducts(res.data.cart);
         for (let i = 0; i < res.data.cart.length; i++) {
           total += parseInt(res.data.cart[i].price);
@@ -321,8 +321,8 @@ function Checkout({ cart }) {
                   />
                   <div class="flex w-full flex-col px-4 py-4">
                     <span class="font-semibold">{cartProduct.productName}</span>
-                    <span class="float-right text-gray-400">
-                      {/* Quantity : {cartProduct.quantity} */}
+                    <span class="float-right text-sm font-meduim text-gray-400">
+                      Product Sku : {cartProduct.productSku}
                     </span>
                     <p class="text-lg font-bold">Rs. {cartProduct.price}</p>
                   </div>

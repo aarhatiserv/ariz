@@ -3,7 +3,7 @@ import React from "react";
 function AboutTeam() {
   return (
     <div>
-      <section className="py-6 " style={{ background: "#F3F6F980" }}>
+      {/* <section className="py-6 " style={{ background: "#F3F6F980" }}>
         <div className="container flex flex-col items-center justify-center p-4 mx-auto space-y-8 sm:p-10">
           <h1 className="text-2xl font-bold leading-none text-center sm:text-4xl">
             Expert Management Team
@@ -59,7 +59,7 @@ function AboutTeam() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

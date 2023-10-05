@@ -20,6 +20,9 @@ const userProductSchema = new mongoose.Schema({
   colors: {
     type: String,
   },
+  productSku: {
+    type: String,
+  },
   description: {
     type: String,
   },

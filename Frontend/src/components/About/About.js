@@ -58,17 +58,19 @@ function About() {
                   destination
                 </span>
               </h2>
-              <p className="text-base text-gray-700 md:text-lg">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                quae. explicabo.
+              <p className="text-base text-gray-700 md:text-base text-justify">
+                ARIZ GARMENTS stands out as a prominent 21st-century
+                manufacturer, unveiling a treasure trove of uniquely crafted,
+                stylish garments catering to all age brackets. Our brand
+                embodies an essence that encapsulates enduring attributes,
+                lending potency to both quality and design.
               </p>
             </div>
             <div>
               <a
                 href="/"
                 aria-label=""
-                className="inline-flex items-center font-semibold transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800"
+                className="inline-flex items-center font-semibold bg-zinc-200 p-4 rounded-sm hover:bg-stone-400 hover:text-white transition-colors duration-200 text-deep-purple-accent-400 hover:text-deep-purple-800"
               >
                 Learn more
                 <svg

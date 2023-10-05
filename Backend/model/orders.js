@@ -5,6 +5,9 @@ const orderItemSchema = new mongoose.Schema({
   productId: String,
   quantity: Number,
   price: Number,
+  productSku: String,
+  color: String,
+
   // ... other fields as needed
 });
 

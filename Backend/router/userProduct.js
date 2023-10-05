@@ -52,6 +52,7 @@ router.post("/userProduct", (req, res) => {
     description,
     publishDate,
     colors,
+    productSku,
   } = req.body;
 
   const product = new userProduct({
@@ -65,6 +66,7 @@ router.post("/userProduct", (req, res) => {
     stock,
     publishDate,
     colors,
+    productSku,
   });
 
   product.save((err) => {
@@ -88,6 +90,7 @@ router.put("/userProduct/:id", (req, res) => {
     stock,
     description,
     colors,
+    productSku,
     publishDate,
   } = req.body;
   console.log(req.body);
@@ -102,6 +105,7 @@ router.put("/userProduct/:id", (req, res) => {
       stock,
       description,
       colors,
+      productSku,
       publishDate,
       imageUrl,
     },

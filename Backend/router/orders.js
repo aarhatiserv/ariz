@@ -116,8 +116,8 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "infocrossangleinterior@gmail.com",
-    pass: "jllgzovojhzbexkn",
+    user: "arizgarments91@gmail.com",
+    pass: "hkbz ihza gyvq hxoo",
   },
 });
 
@@ -142,6 +142,7 @@ function sendOrderEmail(body) {
       Product Name: ${product.productName}
       Price: Rs. ${product.price}
       Quantity: ${product.quantity}
+      Product SKU: ${product.productSku}
       <img src="data:image/jpeg;base64,${product.imageBase64}" alt="${product.productName}" style="max-width: 100px; margin-top: 10px;">
 
     `
@@ -154,8 +155,8 @@ function sendOrderEmail(body) {
   `;
 
   const mailOptions = {
-    from: "shashankranjan970832@gmail.com",
-    to: "shashankranjan970832@gmail.com",
+    from: "arizgarments91@gmail.com",
+    to: "arizgarments91@gmail.com",
     subject: "Order Details",
     text: emailContent,
     html: ` <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;">
@@ -191,6 +192,9 @@ function sendOrderEmail(body) {
               <tr>
                 <td style="text-align: left; padding: 8px;">${
                   product.productName
+                }</td>
+                <td style="text-align: left; padding: 8px;">${
+                  product.productSku
                 }</td>
                 <td style="text-align: right; padding: 8px;">Rs. ${
                   product.price

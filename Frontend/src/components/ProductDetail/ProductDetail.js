@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Tab } from "@headlessui/react";
+import convertCssColorNameToHex from "convert-css-color-name-to-hex";
 
 function ProductDetail({ products, onClose }) {
   const location = useLocation();
@@ -18,13 +20,25 @@ function ProductDetail({ products, onClose }) {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   useEffect(() => {
     if (location.state) {
-      setNewArrivals(location.state);
-      setBreadcrumbs([
-        { label: "Home", path: "/" },
-        { label: "Category", path: "/product" },
+      const productData = location.state[0]; // Assuming product data is stored in an array
+      setNewArrivals(productData);
 
-        { label: newArrivals.productName, path: location.pathname },
-      ]);
+      // Check if the product name is available in the state
+      if (productData.productName) {
+        // Include the product name in the breadcrumbs
+        setBreadcrumbs([
+          { label: "Home", path: "/" },
+          { label: "Category", path: "/product" },
+          { label: productData.productName, path: location.pathname },
+        ]);
+      } else {
+        // If the product name is not available, use a default label
+        setBreadcrumbs([
+          { label: "Home", path: "/" },
+          { label: "Category", path: "/product" },
+          { label: "Product", path: location.pathname },
+        ]);
+      }
     }
   }, [location.state]);
 
@@ -46,7 +60,8 @@ function ProductDetail({ products, onClose }) {
       productName: cartProduct.productName,
       price: cartProduct.price,
       imageUrl: cartProduct.imageUrl,
-      // quantity: cartProduct.quantity,
+      productSku: cartProduct.productSku,
+      color: cartProduct.color,
       quantity: productQuantity,
     };
 
@@ -87,6 +102,40 @@ function ProductDetail({ products, onClose }) {
     setProductQuantity(quantity);
   };
 
+  const [favorites, setFavorites] = useState([]); // Step 1: Manage favorite products
+
+  const isFavorite = (productId) => {
+    return favorites.includes(productId);
+  };
+
+  const navigate = useNavigate();
+
+  const toggleFavorite = (productId) => {
+    // Logic to add/remove the product from favorites and update local storage
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    if (favorites.includes(productId)) {
+      // Remove from favorites
+      const updatedFavorites = favorites.filter((id) => id !== productId);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    } else {
+      // Add to favorites
+      favorites.push(productId);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
+  };
+  const splitColors = (colors) => {
+    return colors.split(",");
+  };
+  // Function to toggle favorite status and store IDs in local storage
+  const [selectedColor, setSelectedColor] = useState(""); // State for selected color
+
+  // ... (rest of the code remains the same)
+
+  const handleColorClick = (color) => {
+    setSelectedColor(color);
+  };
+
   return (
     <div>
       <ToastContainer />
@@ -115,7 +164,11 @@ function ProductDetail({ products, onClose }) {
                 <div class="space-y-4">
                   <div class="relative overflow-hidden rounded border border-gray-100 ">
                     <img
-                      src={newArrival.imageUrl}
+                      src={
+                        selectedColor
+                          ? `${newArrival.imageUrl}-${selectedColor.trim()}.jpg`
+                          : newArrival.imageUrl // Use the selected color for the image source
+                      }
                       loading="lazy"
                       alt=""
                       class="h-full   w-full object-cover object-center"
@@ -224,31 +277,19 @@ function ProductDetail({ products, onClose }) {
                       Color
                     </span>
 
-                    <div class="flex flex-wrap gap-4">
-                      <img
-                        src={newArrival.imageUrl}
-                        loading="lazy"
-                        alt=""
-                        class="h-20 w-20 rounded-full border border-gray-400 object-center ring-2 ring-transparent ring-offset-1 transition duration-100 hover:ring-gray-200"
-                      />
-                      <img
-                        src={newArrival.imageUrl}
-                        loading="lazy"
-                        alt=""
-                        class="h-20 w-20 rounded-full border border-gray-400 object-center ring-2 ring-transparent ring-offset-1 transition duration-100 hover:ring-gray-200"
-                      />
-                      <img
-                        src={newArrival.imageUrl}
-                        loading="lazy"
-                        alt=""
-                        class="h-20 w-20 rounded-full border border-gray-400 object-center ring-2 ring-transparent ring-offset-1 transition duration-100 hover:ring-gray-200"
-                      />
-                      <img
-                        src={newArrival.imageUrl}
-                        loading="lazy"
-                        alt=""
-                        class="h-20 w-20 rounded-full border border-gray-400 object-center ring-2 ring-transparent ring-offset-1 transition duration-100 hover:ring-gray-200"
-                      />
+                    <div class="flex flex-wrap gap-3">
+                      {splitColors(newArrival.colors).map((color, index) => (
+                        <button
+                          key={index}
+                          style={{ backgroundColor: color.trim() }}
+                          className={`rounded-full h-10 w-10 ${
+                            selectedColor === color.trim()
+                              ? "border-2 border-black"
+                              : ""
+                          }`}
+                          onClick={() => handleColorClick(color.trim())}
+                        ></button>
+                      ))}
                     </div>
                   </div>
 
@@ -258,16 +299,15 @@ function ProductDetail({ products, onClose }) {
                     </span>
 
                     <div class="flex flex-wrap gap-3">
-                      <button
-                        type="button"
-                        class="flex h-10 w-12 items-center justify-center rounded border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200"
-                      >
-                        {newArrival.size}
-                      </button>
-
-                      <span class="flex h-10 w-12 cursor-not-allowed items-center justify-center rounded-md border border-transparent bg-white text-center text-sm font-semibold text-gray-400">
-                        XL
-                      </span>
+                      {newArrival.size.split(",").map((size, index) => (
+                        <button
+                          type="button"
+                          key={index}
+                          class="flex h-10 w-12 items-center justify-center rounded border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200"
+                        >
+                          {size.trim()}
+                        </button>
+                      ))}
                     </div>
                   </div>
 
@@ -278,12 +318,20 @@ function ProductDetail({ products, onClose }) {
                       </span>
                     </div>
                   </div>
-
+                  <div class="mb-1 mt-3 flex items-center gap-2 text-gray-500">
+                    <span class="text-xl font-medium text-gray-500  flex">
+                      Product SKU :{" "}
+                      <p className=" px-2 font-normal">
+                        {newArrival.productSku}
+                      </p>
+                    </span>
+                  </div>
                   <div>
                     <span class="mb-3 inline-block text-sm font-medium text-gray-500 md:text-lg">
                       Quantity
                     </span>
                   </div>
+
                   <div class="flex gap-2.5">
                     <div className="bg-gray-200 py-3">
                       <div class="flex items-center gap-1">
@@ -324,25 +372,47 @@ function ProductDetail({ products, onClose }) {
                       Add to cart
                     </button>
 
-                    <a
-                      href="!#"
-                      class="inline-block rounded bg-gray-200 px-5 py-5 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                    {isFavorite(newArrival.productId) ? (
+                      <button
+                        onClick={() => toggleFavorite(newArrival.productId)}
+                        className="text-red-500 bg-gray-200 rounded-lg hover:text-gray-500"
                       >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                        />
-                      </svg>
-                    </a>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                          />
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => toggleFavorite(newArrival.productId)} // Step 3: Handle favorite toggle
+                        className="text-gray-500 bg-gray-200 rounded-lg p-4 hover:text-red-500"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                          />
+                        </svg>
+                      </button>
+                    )}
                   </div>
                   <div class="mt-4">
                     <Link
@@ -353,7 +423,7 @@ function ProductDetail({ products, onClose }) {
                       Buy Now
                     </Link>
                   </div>
-                  <div class="mb-3 mt-7 flex items-center gap-2 text-gray-500">
+                  <div class="mb-3 mt-7 flex items-center gap-2  text-gray-500">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-6 w-6"

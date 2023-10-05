@@ -29,12 +29,15 @@ router.get("/cart/:id", (req, res) => {
 router.post("/cart/:id", (req, res) => {
   const id = req.params.id;
   console.log(id);
-  const { productName, price, imageUrl, quantity } = req.body;
+  const { productName, price, imageUrl, productSku, color, quantity } =
+    req.body;
 
   const cart = new Cart({
     productName,
     price,
     imageUrl,
+    color,
+    productSku,
     quantity,
   });
 
@@ -49,15 +52,15 @@ router.post("/cart/:id", (req, res) => {
 });
 
 router.put("/cart/:id", (req, res) => {
-  const { productName, price, imageUrl } = req.body;
+  const { productName, price, productSku, color, imageUrl } = req.body;
 
   Cart.findByIdAndUpdate(
     req.params.id,
     {
       productName,
-
+      productSku,
       price,
-
+      color,
       imageUrl,
     },
     (err, cart) => {

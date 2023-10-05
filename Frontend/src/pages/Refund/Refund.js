@@ -1,588 +1,223 @@
 import React, { useState } from "react";
 
 const Faq8 = () => {
-  const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
-  const [open3, setOpen3] = useState(false);
-  const [open4, setOpen4] = useState(false);
-  const [open5, setOpen5] = useState(false);
-  const [open6, setOpen6] = useState(false);
-  const [open7, setOpen7] = useState(false);
-  const [open8, setOpen8] = useState(false);
-  const [open9, setOpen9] = useState(false);
-  const [open10, setOpen10] = useState(false);
-
   return (
     <div>
-      <div className="" style={{ background: "#FEFCFB" }}>
-        <div className=" lg:container lg:mx-auto lg:py-16 md:py-12 md:px-6 py-12 px-4">
-          <h1 className="text-center lg:text-4xl text-3xl lg:leading-9 leading-7 text-gray-800 ">
-            Cancellation & Refund Policies
-          </h1>
-
-          <div className="lg:w-8/12 w-full mx-auto">
-            {/* <!-- Question 1 --> */}
-            <hr className=" w-full lg:mt-10 md:mt-12 md:mb-8 my-8" />
-
-            <div className="w-full md:px-6  ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className=" ">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 md:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      1.
-                    </span>{" "}
-                    Can I cancel my order after it has been placed?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen(!open)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
+      <div className="py-12" style={{ background: "#FEFCFB" }}>
+        <div className="max-w-screen-lg mx-auto">
+          <main class="">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
+                  Refund Policy :
+                </h2>
               </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  Yes, you can cancel your order within a specific time frame
-                  after placing it. Our cancellation window is typically 24
-                  hours from the time of order placement. However, please note
-                  that if your order has already been processed or shipped,
-                  cancellation might not be possible. Contact our customer
-                  support team as soon as possible to initiate the cancellation
-                  process.
+            </div>
+            <div class="flex flex-col pt-3 lg:flex-row lg:space-x-12">
+              <div class="px-4 mt-2 lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
+                <p class="pb-6 text-justify font-assistant ">
+                  {" "}
+                  Thank you for shopping at Ariz Garments. We value your
+                  satisfaction and want to ensure a seamless shopping
+                  experience. Please read our Refund Policy carefully to
+                  understand your rights and responsibilities when it comes to
+                  requesting refunds for your purchases from our e-commerce
+                  store.
                 </p>
               </div>
             </div>
+          </main>
 
-            {/* <!-- Question 2 --> */}
-
-            <hr className=" w-full lg:mt-10 my-8" />
-
-            <div className="w-full md:px-6 ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className="">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 lg:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      2.
-                    </span>{" "}
-                    How do I initiate a cancellation?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen2(!open2)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open2 ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open2 ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  To cancel your order, please reach out to our customer support
-                  team via email or phone, providing your order details and
-                  reason for cancellation. Our team will guide you through the
-                  process and confirm the cancellation if it's within the
-                  allowed time frame.
-                </p>
+          <main class="py-3">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4 ">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
+                  Eligibility for Refunds :
+                </h2>
               </div>
             </div>
 
-            {/* <!-- Question 3 --> */}
-
-            <hr className=" w-full lg:mt-10 my-8" />
-
-            <div className="w-full md:px-6 ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className="">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 lg:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      3.
-                    </span>
-                    What is your refund policy?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen3(!open3)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open3 ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  We have a straightforward refund policy. If you cancel your
-                  order within the specified time frame, you will be eligible
-                  for a full refund. Refunds are typically processed within 7-10
-                  business days from the cancellation confirmation.
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
+              <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
+                <p class="pb-6 text-justify font-assistant ">
+                  Defective or Damaged Items: If you receive an item that is
+                  damaged or defective you are eligible for a refund or
+                  replacement. Please contact our customer support team within
+                  [2 working days] of receiving the item, and we will guide you
+                  through the return and refund process.
+                  <br />
+                  <br />
+                  Wrong Size or Item: If you receive an item in the wrong size
+                  or a different item than the one you ordered, you may request
+                  for return. Please contact us within [2 working days] of
+                  receiving the item to initiate the return process.
+                  <br />
+                  <br />
+                  All the refund or return will be approved on the basis of the
+                  product received after the quality check. Where original
+                  attached tags are not removed, without alterations, no damage
+                  or defective.
+                  <br />
+                  <br />
+                  If quality check fails under any of the above mentioned
+                  reasons. Refund or return will not be confirmed.
                 </p>
               </div>
             </div>
-
-            {/* <!-- Question 4 --> */}
-
-            <hr className=" w-full lg:mt-10 my-8" />
-
-            <div className="w-full md:px-6  ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className="">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 lg:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      4.
-                    </span>
-                    Can I get a refund if I cancel my order after the allowed
-                    time frame?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen4(!open4)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open4 ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open4 ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  Unfortunately, if the cancellation request is made after the
-                  allowed time frame or if the order has already been shipped, a
-                  refund might not be possible. However, you may be eligible for
-                  other options, such as returns or exchanges. Contact our
-                  customer support team for assistance.
-                </p>
+          </main>
+          <main class="py-3">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4 ">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
+                  Return Process :
+                </h2>
               </div>
             </div>
 
-            {/* <!-- Question 5 --> */}
-
-            <hr className=" w-full lg:mt-10 my-8" />
-
-            <div className="w-full md:px-6 ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className="">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 lg:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      5.
-                    </span>
-                    How do I track the status of my refund?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen5(!open5)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open5 ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open5 ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  Once your refund has been processed, you will receive an email
-                  notification confirming the refund. The time it takes for the
-                  refund to reflect in your account depends on your payment
-                  method and financial institution. If you have concerns about
-                  the status of your refund, feel free to contact our support
-                  team.
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
+              <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
+                <p class="pb-6 text-justify font-assistant ">
+                  Contact our customer support team at
+                  customercare@arizgarments.com or +91 98364 21234 within [2
+                  days] of receiving the item to inform us of the issue.
+                  <br />
+                  <br />
+                  Provide your order number, a description of the problem, and
+                  any relevant photos, if applicable, to help us assess the
+                  issue.
+                  <br />
+                  <br />
+                  Wait for instructions from our customer support team. We may
+                  require you to return the item to us, and we will provide you
+                  with the necessary return shipping information.
                 </p>
               </div>
             </div>
-
-            <hr className=" w-full lg:mt-10 my-8" />
-            <div className="w-full md:px-6 ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className="">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 lg:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      6.
-                    </span>
-                    Can I return a product for a refund if I'm not satisfied
-                    with it?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen6(!open6)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open6 ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open6 ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  Yes, we have a separate return policy for products you're not
-                  satisfied with. You can initiate a return within a specified
-                  time frame after receiving the product. Our customer support
-                  team will guide you through the return process, and upon
-                  successful inspection of the returned product, a refund will
-                  be issued.
-                </p>
+          </main>
+          <main class="py-3">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4 ">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
+                  Refund Methods :
+                </h2>
               </div>
             </div>
 
-            <hr className=" w-full lg:mt-10 my-8" />
-            <div className="w-full md:px-6 ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className="">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 lg:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      7.
-                    </span>
-                    Are there any items that are not eligible for cancellation
-                    or refund?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen7(!open7)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open7 ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open7 ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  Certain items, such as personalized or customized products,
-                  perishables, and digital goods, may not be eligible for
-                  cancellation or refund. Please refer to our product
-                  descriptions and terms for specific information regarding
-                  eligibility.
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
+              <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
+                <p class="pb-6 text-justify font-assistant ">
+                  Upon approval of your refund request, we will initiate the
+                  refund process. The following methods may be used, depending
+                  on the circumstances:
+                  <br />
+                  Original Payment Method: If you paid for your order using a
+                  credit card, debit card, or other online payment method, we
+                  will refund the amount to the original payment method.
                 </p>
+              </div>
+            </div>
+          </main>
+          <main class="py-3">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4 ">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
+                  Refund Processing Time :
+                </h2>
               </div>
             </div>
 
-            <hr className=" w-full lg:mt-10 my-8" />
-            <div className="w-full md:px-6 ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className="">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 lg:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      8.
-                    </span>
-                    Can I exchange a product instead of requesting a refund?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen8(!open8)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open8 ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open8 ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  Yes, we offer the option to exchange products if you're not
-                  satisfied with your purchase. Contact our customer support
-                  team to initiate the exchange process and receive guidance on
-                  how to proceed.
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
+              <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
+                <p class="pb-6 text-justify font-assistant ">
+                  Please allow 15 working days for us to process your refund
+                  after we have received the returned item or approved your
+                  refund request. Refunds may take additional time to appear in
+                  your account, depending on your payment provider.
                 </p>
+              </div>
+            </div>
+          </main>
+          <main class="py-3">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4 ">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
+                  Non-Refundable Items :
+                </h2>
               </div>
             </div>
 
-            <hr className=" w-full lg:mt-10 my-8" />
-            <div className="w-full md:px-6 ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className="">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 lg:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      9.
-                    </span>
-                    What if my refund amount is incorrect or hasn't been
-                    received?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen9(!open9)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open9 ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open9 ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  In case of any discrepancies or delays in receiving your
-                  refund, please get in touch with our customer support team. We
-                  will investigate the issue and ensure that you receive the
-                  correct refund amount in a timely manner.
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
+              <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
+                <p class="pb-6 text-justify font-assistant ">
+                  Items that have been worn, washed, or altered. Custom-made or
+                  personalized items. Items without their original tags or
+                  packaging.
                 </p>
+              </div>
+            </div>
+          </main>
+          <main class="py-3">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4 ">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
+                  Shipping Costs :
+                </h2>
               </div>
             </div>
 
-            <hr className=" w-full lg:mt-10 my-8" />
-            <div className="w-full md:px-6 ">
-              <div
-                id="mainHeading"
-                className="flex justify-between items-center w-full"
-              >
-                <div className="">
-                  <p className="flex justify-center items-center font-medium text-base leading-6 lg:leading-4 text-gray-800">
-                    {" "}
-                    <span className="  lg:mr-6 mr-4 lg:text-2xl md:text-xl text-lg leading-6 md:leading-5 lg:leading-4 font-semibold text-gray-800">
-                      10.
-                    </span>
-                    How can I contact your customer support team for
-                    cancellation or refund queries?
-                  </p>
-                </div>
-                <button
-                  aria-label="toggler"
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-                  onClick={() => setOpen10(!open10)}
-                >
-                  <svg
-                    className={
-                      "transform " + (open10 ? "rotate-180" : "rotate-0")
-                    }
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 9L12 15L18 9"
-                      stroke="black"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                id="menu"
-                className={"mt-6 w-full " + (open10 ? "block" : "hidden")}
-              >
-                <p className="text-base leading-6 text-gray-600 font-normal">
-                  You can reach our customer support team through the contact
-                  information provided on our website. Feel free to email us or
-                  call our helpline, and our representatives will be happy to
-                  assist you with any cancellation or refund-related inquiries.
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
+              <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
+                <p class="pb-6 text-justify font-assistant ">
+                  Shipping costs associated with the original purchase are
+                  non-refundable, except in cases where the item arrived
+                  damaged, defective, or was sent in error.
                 </p>
               </div>
             </div>
-          </div>
+          </main>
+          <main class="py-3">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4 ">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
+                  Contact Information :
+                </h2>
+              </div>
+            </div>
+
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
+              <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
+                <p class="pb-6 text-justify font-assistant ">
+                  If you have any questions or need assistance with your refund
+                  request, please contact our customer support team:
+                  <br />
+                  Email: customercare@arizgarments.com
+                  <br />
+                  Phone: +91 98364 21234
+                </p>
+              </div>
+            </div>
+          </main>
+          <main class="py-3">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4 ">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
+                  Changes to This Refund Policy :
+                </h2>
+              </div>
+            </div>
+
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
+              <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
+                <p class="pb-6 text-justify font-assistant ">
+                  Ariz Garments reserves the right to update or modify this
+                  Refund Policy at any time.
+                </p>
+              </div>
+            </div>
+          </main>
         </div>
       </div>
-      <div className="py-8"></div>
+      <div className="py-6"></div>
     </div>
   );
 };

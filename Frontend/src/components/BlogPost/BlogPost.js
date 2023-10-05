@@ -28,7 +28,7 @@ function Feeds() {
                         aria-label="Category"
                         title="traveling"
                       >
-                        traveling
+                        travelling
                       </a>
                       <span className="text-gray-600">— 28 Dec 2020</span>
                     </p>

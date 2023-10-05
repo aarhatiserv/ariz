@@ -6,15 +6,15 @@ function Privacy() {
       <div className="py-12" style={{ background: "#FEFCFB" }}>
         <div className="max-w-screen-lg mx-auto">
           <main class="">
-            <div class="mb-4 md:mb-0 w-full mx-auto relative">
-              <div class="px-4 lg:px-4">
-                <h2 class="mb-4  text-3xl text-gray-800 md:mb-6 lg:text-4xl">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
+              <div class="px-4 lg:px-4 ">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
                   Vision :
                 </h2>
               </div>
             </div>
 
-            <div class="flex flex-col  lg:flex-row lg:space-x-12">
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
               <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
                 <p class="pb-6 text-justify font-assistant ">
                   {" "}
@@ -25,15 +25,15 @@ function Privacy() {
             </div>
           </main>
           <main class="py-6">
-            <div class="mb-4 md:mb-0 w-full mx-auto relative">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
               <div class="px-4 lg:px-4">
-                <h2 class="mb-4  text-3xl text-gray-800 md:mb-6 lg:text-4xl">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
                   Mission :
                 </h2>
               </div>
             </div>
 
-            <div class="flex flex-col  lg:flex-row lg:space-x-12">
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
               <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
                 <p class="pb-6 text-justify font-assistant ">
                   {" "}
@@ -48,15 +48,15 @@ function Privacy() {
             </div>
           </main>
           <main class="">
-            <div class="mb-4 md:mb-0 w-full mx-auto relative">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
               <div class="px-4 lg:px-4">
-                <h2 class="mb-4  text-3xl text-gray-800 md:mb-6 lg:text-4xl">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
                   Experience Talks :
                 </h2>
               </div>
             </div>
 
-            <div class="flex flex-col  lg:flex-row lg:space-x-12">
+            <div class="flex flex-col pt-3  lg:flex-row lg:space-x-12">
               <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
                 <p class="pb-6 text-justify font-assistant ">
                   {" "}
@@ -87,15 +87,15 @@ function Privacy() {
             </div>
           </main>
           <main class="py-6">
-            <div class="mb-4 md:mb-0 w-full mx-auto relative">
+            <div class="mb-4 md:mb-0 w-full mx-auto relative bg-pink-50 p-2">
               <div class="px-4 lg:px-4">
-                <h2 class="mb-4  text-3xl text-gray-800 md:mb-6 lg:text-4xl">
+                <h2 class="mb-1  text-3xl text-gray-800 md:mb-1 lg:text-3xl">
                   Why choose us ? :
                 </h2>
               </div>
             </div>
 
-            <div class="flex flex-col  lg:flex-row lg:space-x-12">
+            <div class="flex flex-col pt-3 lg:flex-row lg:space-x-12">
               <div class="px-4  lg:px-4 text-center text-lg leading-relaxed w-full lg:w-full">
                 <p class="pb-6 text-justify font-assistant ">
                   {" "}

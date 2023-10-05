@@ -7,6 +7,12 @@ const cartSchema = new mongoose.Schema({
   quantity: {
     type: Number,
   },
+  productSku: {
+    type: String,
+  },
+  color: {
+    type: String,
+  },
   price: {
     type: Number,
   },
