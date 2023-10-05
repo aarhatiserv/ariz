@@ -26,9 +26,9 @@ function Feeds() {
                         href="/"
                         className="transition-colors duration-200 text-blue-gray-900 hover:text-deep-purple-accent-700"
                         aria-label="Category"
-                        title="traveling"
+                        title="travelling"
                       >
-                        travelling
+                        traveling
                       </a>
                       <span className="text-gray-600">— 28 Dec 2020</span>
                     </p>
