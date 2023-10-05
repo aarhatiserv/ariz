@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
-import { GoogleLogin } from "react-google-login";
+// import { GoogleLogin } from "react-google-login";
 
 function SignIn() {
   const [showBirthdayCelebration, setShowBirthdayCelebration] = useState(false);
@@ -48,16 +48,16 @@ function SignIn() {
     });
   };
 
-  const responseGoogle = (response) => {
-    if (response && response.profileObj) {
-      setUser({
-        email: response.profileObj.email,
-        password: "",
-      });
+  // const responseGoogle = (response) => {
+  //   if (response && response.profileObj) {
+  //     setUser({
+  //       email: response.profileObj.email,
+  //       password: "",
+  //     });
 
-      handleLogin();
-    }
-  };
+  //     handleLogin();
+  //   }
+  // };
 
   return (
     <div>
@@ -85,7 +85,7 @@ function SignIn() {
                 </div>
 
                 <div class="mt-5">
-                  <GoogleLogin
+                  {/* <GoogleLogin
                     clientId="543911932766-cq750g05dir8g2pd3qrtt8kkskulkvjl.apps.googleusercontent.com"
                     buttonText="Sign in with Google"
                     onSuccess={responseGoogle}
@@ -125,7 +125,7 @@ function SignIn() {
                         Sign in with Google
                       </button>
                     )}
-                  />
+                  /> */}
 
                   <div class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 ">
                     Or
