@@ -82,11 +82,12 @@ const Ordersum3 = () => {
                             {cartProduct.quantity}
                           </p>
                           <p className="text-sm leading-none text-gray-800">
-                            <span className="text-gray-500">Size : </span> Small
+                            <span className="text-gray-500">Size : </span>{" "}
+                            {cartProduct.size}
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className="text-gray-500">Color : </span>{" "}
-                            Light Blue
+                            {cartProduct.color}
                           </p>
                         </div>
                       </div>

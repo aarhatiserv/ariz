@@ -3,7 +3,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Confetti from "react-confetti";
 import shortid from "shortid";
-import OrderConfirmationEmail from "./OrderConfiramtion";
 
 function Checkout({ cart }) {
   const [cartProducts, setCartProducts] = useState([]);
@@ -12,13 +11,10 @@ function Checkout({ cart }) {
   const [productPrice, setProductPrice] = useState(0);
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [showBirthdayCelebration, setShowBirthdayCelebration] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const [orderID, setOrderID] = useState("");
   const [orderId, setOrderId] = useState("");
   const [showOrderReceivedMessage, setShowOrderReceivedMessage] =
     useState(false);
   const [carts, setCarts] = useState([]);
-
   const [userDetails, setUserDetails] = useState({
     name: "",
     email: "",
@@ -26,6 +22,18 @@ function Checkout({ cart }) {
     state: "",
     zip: "",
   });
+  const [deliveryOption, setDeliveryOption] = useState("normal");
+  const [shippingCharges, setShippingCharges] = useState(250);
+
+  const handleDeliveryOptionChange = (event) => {
+    const selectedOption = event.target.value;
+    setDeliveryOption(selectedOption);
+    if (selectedOption === "express") {
+      setShippingCharges(400);
+    } else {
+      setShippingCharges(250);
+    }
+  };
 
   const handleUserDetailsChange = (event) => {
     const { name, value } = event.target;
@@ -40,7 +48,7 @@ function Checkout({ cart }) {
     var total = 0;
     var id = localStorage.getItem("id");
     axios
-      .get(`https://ariz.onrender.com/api/cart/cart/${id}`)
+      .get(`http://localhost:5000/api/cart/cart/${id}`)
       .then((res) => {
         console.log("API Response:", res.data);
         setCartProducts(res.data.cart);
@@ -67,7 +75,7 @@ function Checkout({ cart }) {
     const newTotalPrice = newProductPrice - couponDiscount;
 
     setTotalPrice(newTotalPrice);
-    setProductPrice(newProductPrice); // Update productPrice
+    setProductPrice(newProductPrice);
     setCartProducts(updatedCartProducts);
   };
 
@@ -79,7 +87,6 @@ function Checkout({ cart }) {
 
     setTotalPrice(newTotalPrice);
   }, [carts]);
-  // for delete
 
   const handleDelete = async (itemId) => {
     try {
@@ -87,7 +94,7 @@ function Checkout({ cart }) {
       await axios.delete(
         `https://ariz.onrender.com/api/cart/cart/${id}/${itemId}`
       );
-      fetchData(); // Fetch updated cart data after successful deletion
+      fetchData();
 
       Swal.fire({
         title: "Success!",
@@ -101,13 +108,10 @@ function Checkout({ cart }) {
     }
   };
 
-  //   for coupon
-
   function handleCouponCodeInput(event) {
     setCouponCode(event.target.value);
   }
 
-  // Update the handleCouponCode function
   const handleCouponCode = async () => {
     try {
       const response = await axios.get(
@@ -150,7 +154,6 @@ function Checkout({ cart }) {
 
   const handleCheckout = async (amount) => {
     if (amount === null || amount === 0) {
-      // Handle empty amount error
       return Swal.fire({
         title: "Amount Empty",
         text: "Please Enter amount you want to add to One24Wallet",
@@ -170,7 +173,7 @@ function Checkout({ cart }) {
         const orderID = response.data.id;
 
         var options = {
-          key: "rzp_test_ms99YcEe3TbTKB", // Replace with your Razorpay key ID
+          key: "rzp_test_ms99YcEe3TbTKB",
           amount: amount * 100,
           currency: "INR",
           name: "Checkout",
@@ -179,15 +182,12 @@ function Checkout({ cart }) {
           order_id: orderID,
           prefill: {
             email: "shashankranjan970832@gmail.com",
-            contact: "9667022458", // Replace with the phone number
-            upi: "9667022458@paytm", // Replace with the UPI ID
+            contact: "9667022458",
+            upi: "9667022458@paytm",
           },
           handler: async function (response) {
             try {
-              // const id = localStorage.getItem("id");
-              // await axios.delete(`http://localhost:5000/api/cart/cart/${id}`);
               try {
-                // Create the order on the server
                 const response = await axios.post(
                   "https://ariz.onrender.com/api/order/orders",
                   {
@@ -195,20 +195,23 @@ function Checkout({ cart }) {
                     totalPrice,
                     orderId,
                     orderItems: cartProducts.map((product) => ({
+                      productSku: product.productSku,
                       productId: product._id,
                       quantity: product.quantity,
+                      color: product.color,
+                      size: product.size,
                     })),
                     cartProducts: cartProducts.map((product) => ({
                       ...product,
                       imageUrl: product.imageUrl,
                       quantity: product.quantity,
+                      color: product.color,
+                      size: product.size,
                     })),
                   }
                 );
 
                 console.log("Order created:", response.data);
-
-                // ... handle other parts of your checkout process ...
               } catch (error) {
                 console.error("Error creating order:", error);
               }
@@ -223,16 +226,14 @@ function Checkout({ cart }) {
                   response.razorpay_payment_id,
                 button: "OK",
               }).then(function () {
-                setCartProducts([]); // Clear the cart products state
-                setTotalPrice(0); // Reset the total price
+                setCartProducts([]);
+                setTotalPrice(0);
                 setShowOrderReceivedMessage(true);
                 setShowBirthdayCelebration(true);
 
                 setTimeout(() => {
                   setShowBirthdayCelebration(false);
                 }, 5000);
-
-                // window.location.reload();
               });
             } catch (error) {
               Swal.fire({
@@ -259,36 +260,6 @@ function Checkout({ cart }) {
         });
       }
     }
-
-    // try {
-    //   // Send email
-    //   const emailResponse = await axios.post(
-    //     "http://localhost:5000/api/mail/send-email",
-    //     {
-    //       userEmail: userDetails.email,
-    //       userDetails: userDetails,
-    //       cartProducts: cartProducts.map((product) => ({
-    //         ...product,
-    //         imageUrl: product.imageUrl,
-    //         quantity: product.quantity,
-    //       })),
-    //       totalPrice: totalPrice,
-    //       orderID: orderID,
-    //     }
-    //   );
-
-    //   console.log("Email response:", emailResponse.data);
-    // } catch (emailError) {
-    //   console.error("Email sending error:", emailError);
-    // }
-
-    // OrderConfirmationEmail(
-    //   userDetails.email,
-    //   userDetails,
-    //   cartProducts,
-    //   totalPrice,
-    //   orderID
-    // );
   };
 
   return (
@@ -315,15 +286,19 @@ function Checkout({ cart }) {
               >
                 <div class="flex flex-col rounded-lg bg-white sm:flex-row">
                   <img
-                    class="m-2 h-24 w-28 rounded-md border  object-center"
+                    class="m-2 h-32 w-28 rounded-md border  object-center"
                     src={cartProduct.imageUrl}
                     alt=""
                   />
                   <div class="flex w-full flex-col px-4 py-4">
                     <span class="font-semibold">{cartProduct.productName}</span>
-                    <span class="float-right text-sm font-meduim text-gray-400">
-                      Product Sku : {cartProduct.productSku}
+                    <span class="float-right text-sm font-medium text-gray-400">
+                      Color : {cartProduct.color}
                     </span>
+                    <span class="float-right text-sm font-medium text-gray-400">
+                      Size : {cartProduct.size}
+                    </span>
+
                     <p class="text-lg font-bold">Rs. {cartProduct.price}</p>
                   </div>
                 </div>
@@ -379,29 +354,65 @@ function Checkout({ cart }) {
           )}
 
           <p class="mt-8 text-lg font-medium">Shipping Methods</p>
-          <form class="mt-5 grid gap-6">
-            <div class="relative">
-              <input
-                class="peer hidden"
-                id="radio_2"
-                type="radio"
-                name="radio"
-                checked
-              />
-              <span class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+          <form className="mt-5 grid gap-6">
+            <div className="relative">
               <label
-                class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                for="radio_2"
+                className={`flex cursor-pointer select-none rounded-lg border ${
+                  deliveryOption === "normal"
+                    ? "border-blue-500"
+                    : "border-gray-300"
+                } p-4`}
               >
-                <img
-                  class="w-14 object-contain"
-                  src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2FDTDC.Official%2Fposts%2Fworrying-about-timely-delivery-we-got-your-back-expose-yourself-to-unbelievably-%2F5229180033864665%2F&psig=AOvVaw1mXauftE4h6XSM3Nr_hNfe&ust=1691652081999000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMiA-52Fz4ADFQAAAAAdAAAAABAE"
-                  alt=""
+                <input
+                  type="radio"
+                  id="normalDelivery"
+                  name="deliveryOption"
+                  value="normal"
+                  checked={deliveryOption === "normal"}
+                  onChange={handleDeliveryOptionChange}
+                  className="hidden"
                 />
-                <div class="ml-5">
-                  <span class="mt-2 font-semibold">Delivery</span>
-                  <p class="text-slate-500 text-sm leading-6">
+                <div className="w-10 h-10 flex items-center justify-center bg-white rounded-full border border-gray-300">
+                  {deliveryOption === "normal" && (
+                    <div className="w-5 h-5 bg-blue-500 rounded-full"></div>
+                  )}
+                </div>
+                <div className="ml-5">
+                  <span className="mt-2 font-semibold">Delivery</span>
+                  <p className="text-slate-500 text-sm leading-6">
                     Delivery: 5-7 Days
+                  </p>
+                </div>
+              </label>
+            </div>
+          </form>
+          <form className="mt-5 grid gap-6">
+            <div className="relative">
+              <label
+                className={`flex cursor-pointer select-none rounded-lg border ${
+                  deliveryOption === "express"
+                    ? "border-blue-500"
+                    : "border-gray-300"
+                } p-4`}
+              >
+                <input
+                  type="radio"
+                  id="expressDelivery"
+                  name="deliveryOption"
+                  value="express"
+                  checked={deliveryOption === "express"}
+                  onChange={handleDeliveryOptionChange}
+                  className="hidden"
+                />
+                <div className="w-10 h-10 flex items-center justify-center bg-white rounded-full border border-gray-300">
+                  {deliveryOption === "express" && (
+                    <div className="w-5 h-5 bg-blue-500 rounded-full"></div>
+                  )}
+                </div>
+                <div className="ml-5">
+                  <span className="mt-2 font-semibold">Express Delivery</span>
+                  <p className="text-slate-500 text-sm leading-6">
+                    Delivery: 2-3 Days
                   </p>
                 </div>
               </label>
@@ -472,7 +483,7 @@ function Checkout({ cart }) {
               </div>
               <button
                 onClick={handleCouponCode}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                className="bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded mt-4"
               >
                 Apply
               </button>
@@ -566,7 +577,9 @@ function Checkout({ cart }) {
               </div>
               <div class="flex items-center justify-between">
                 <p class="text-sm font-medium text-gray-900">Shipping</p>
-                <p class="font-semibold text-gray-900">$8.00</p>
+                <p class="font-semibold text-gray-900">
+                  Rs. {shippingCharges.toFixed(2)}
+                </p>
               </div>
               <div class="flex items-center justify-between">
                 <p class="text-sm font-medium text-gray-900">Coupon Discount</p>
@@ -578,13 +591,13 @@ function Checkout({ cart }) {
             <div class="mt-6 flex items-center justify-between">
               <p class="text-sm font-medium text-gray-900">Total</p>
               <p class="text-2xl font-semibold text-gray-900">
-                Rs. {totalPrice.toFixed(2)}
+                Rs. {(totalPrice + shippingCharges).toFixed(2)}
               </p>
             </div>
           </div>
 
           <button
-            onClick={() => handleCheckout(totalPrice)}
+            onClick={() => handleCheckout(totalPrice + shippingCharges)}
             class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
           >
             Place Order

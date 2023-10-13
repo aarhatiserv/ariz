@@ -11,6 +11,7 @@ function NewArrivalCollection() {
   const maxShowCount = 8; // You can adjust the maximum number of items to display
   const [carts, setCarts] = useState([]);
   const [isFilterFixed, setIsFilterFixed] = useState(false); // Step 2
+  const [variantSelected, setVariantSelected] = useState(0);
 
   // Step 3: Create a function to handle scrolling
   const handleScroll = () => {
@@ -49,13 +50,12 @@ function NewArrivalCollection() {
   }, [showCount]);
   //to make an event we have to use function
   const handleAddtoCart = async (cartProduct) => {
-    console.log(cartProduct);
+    const selectedVariant = cartProduct.variant[variantSelected];
+
     const cart = {
-      productName: cartProduct.productName,
-
-      price: cartProduct.price,
-
-      imageUrl: cartProduct.imageUrl,
+      productName: selectedVariant.productName,
+      price: selectedVariant.price,
+      image: selectedVariant.image,
       quantity: 1,
     };
     var id = localStorage.getItem("id");
@@ -146,7 +146,7 @@ function NewArrivalCollection() {
                       class="group relative mb-2 block h-80  sm:h-[450px] overflow-hidden rounded bg-gray-100 shadow-sm  lg:mb-3"
                     >
                       <img
-                        src={newArrival.imageUrl}
+                        src={newArrival.variant[0].image[0]}
                         loading="lazy"
                         alt=""
                         class="h-full w-full border object-center transition duration-200 group-hover:scale-110"

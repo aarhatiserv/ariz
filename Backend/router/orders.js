@@ -143,6 +143,8 @@ function sendOrderEmail(body) {
       Price: Rs. ${product.price}
       Quantity: ${product.quantity}
       Product SKU: ${product.productSku}
+      Color: ${product.color}
+     Size: ${product.size}
       <img src="data:image/jpeg;base64,${product.imageBase64}" alt="${product.productName}" style="max-width: 100px; margin-top: 10px;">
 
     `
@@ -201,6 +203,12 @@ function sendOrderEmail(body) {
                 }</td>
                 <td style="text-align: right; padding: 8px;">${
                   product.quantity
+                }</td>
+                <td style="text-align: right; padding: 8px;">${
+                  product.color
+                }</td>
+                <td style="text-align: right; padding: 8px;">${
+                  product.size
                 }</td>
                 <td style="text-align: right; padding: 8px;">Rs. ${
                   product.price * product.quantity

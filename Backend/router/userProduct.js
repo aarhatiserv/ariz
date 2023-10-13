@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userProduct = require("../model/userProduct");
 const mongoose = require("mongoose");
+const { nanoid } = require("nanoid");
 
 router.get("/userProduct", (req, res) => {
   userProduct.find((err, products) => {
@@ -13,17 +14,6 @@ router.get("/userProduct", (req, res) => {
     }
   });
 });
-// });
-// router.get("/userProduct", (req, res) => {
-//   userProduct.find({ isNewArrival: true }, (err, products) => {
-//     if (err) {
-//       console.log(err);
-//       res.status(500).send("An error occurred while fetching the products.");
-//     } else {
-//       res.send(products);
-//     }
-//   });
-// });
 
 router.get("/userProduct", (req, res) => {
   userProduct.findById(req.params.id, (err, product) => {
@@ -40,43 +30,67 @@ router.get("/userProduct", (req, res) => {
   });
 });
 
-router.post("/userProduct", (req, res) => {
+router.post("/userProduct", async (req, res) => {
   const {
+    productSku,
     productName,
     category,
     price,
-    imageUrl,
     type,
     size,
     stock,
     description,
-    publishDate,
-    colors,
-    productSku,
+    imageUrl,
+    additional,
+    mrp,
+    variant,
   } = req.body;
+  try {
+    let mSku = variant[0].masterSku;
+    console.log(mSku);
 
-  const product = new userProduct({
-    productName,
-    category,
-    price,
-    imageUrl,
-    type,
-    size,
-    description,
-    stock,
-    publishDate,
-    colors,
-    productSku,
-  });
+    // Check if the product with the given productCode already exists
+    const allProducts = await userProduct.find({});
+    let existingData;
 
-  product.save((err) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("An error occurred while adding the product.", err);
+    for (let i = 0; i < allProducts.length; i++) {
+      if (allProducts[i].productSku === mSku) {
+        console.log("Product already exists.");
+        existingData = allProducts[i];
+        break;
+      }
+    }
+
+    if (existingData) {
+      // If the product exists, update its variant array
+      existingData.variant.push(
+        ...variant.map((item) => ({ ...item, masterSku: productSku }))
+      );
+      await existingData.save();
+      res.send("Variant data added to existing product successfully.");
     } else {
+      // If the product doesn't exist, create a new product
+      product = new userProduct({
+        productSku,
+        productName,
+        category,
+        price,
+        type,
+        size,
+        description,
+        imageUrl,
+        additional,
+        stock,
+        mrp,
+        variant,
+      });
+      await product.save();
       res.send("Product added successfully.");
     }
-  });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).send("An error occurred while adding the product.");
+  }
 });
 
 router.put("/userProduct/:id", (req, res) => {
@@ -87,15 +101,18 @@ router.put("/userProduct/:id", (req, res) => {
     imageUrl,
     type,
     size,
+
     stock,
     description,
+    additional,
     colors,
     productSku,
-    publishDate,
+    masterSku,
+    mrp,
   } = req.body;
   console.log(req.body);
   userProduct.findByIdAndUpdate(
-    mongoose.Types.ObjectId(req.params.id), // Parse the id as an ObjectId
+    mongoose.Types.ObjectId(req.params.id),
     {
       productName,
       category,
@@ -104,9 +121,12 @@ router.put("/userProduct/:id", (req, res) => {
       size,
       stock,
       description,
+
+      additional,
       colors,
       productSku,
-      publishDate,
+      masterSku,
+      mrp,
       imageUrl,
     },
     (err, product) => {

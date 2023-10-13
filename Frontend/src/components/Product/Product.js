@@ -17,6 +17,7 @@ function NewArrivalCollection({ page }) {
   const navigate = useNavigate();
 
   const [isFilterFixed, setIsFilterFixed] = useState(false); // Step 2
+  const [variantSelected, setVariantSelected] = useState(0);
 
   // Step 3: Create a function to handle scrolling
   const handleScroll = () => {
@@ -91,12 +92,12 @@ function NewArrivalCollection({ page }) {
   };
 
   const handleAddtoCart = async (cartProduct) => {
-    console.log(cartProduct);
+    const selectedVariant = cartProduct.variant[variantSelected];
+
     const cart = {
-      productName: cartProduct.productName,
-      price: cartProduct.price,
-      imageUrl: cartProduct.imageUrl,
-      quantity: 1,
+      productName: selectedVariant.productName,
+      price: selectedVariant.price,
+      image: selectedVariant.image,
     };
     var id = localStorage.getItem("id");
     await axios
@@ -191,7 +192,7 @@ function NewArrivalCollection({ page }) {
                           class="group relative mb-2 block h-80  sm:h-[400px] overflow-hidden rounded bg-gray-100 shadow-md shadow-gray-200  lg:mb-3"
                         >
                           <img
-                            src={userProduct.imageUrl}
+                            src={userProduct.variant[0].image[0]}
                             loading="lazy"
                             alt=""
                             class="h-full w-full border object-center transition duration-200 group-hover:scale-110"
@@ -204,11 +205,11 @@ function NewArrivalCollection({ page }) {
                               href="!#"
                               class="text-lg font-semibold py-1 text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
                             >
-                              {userProduct.productName}
+                              {userProduct.variant[variantSelected].productName}
                             </a>
                             <span class="text-gray-500 py-1 font-semibold">
                               {" "}
-                              Rs. {userProduct.price}
+                              Rs. {userProduct.variant[variantSelected].price}
                             </span>
                           </div>
                         </div>

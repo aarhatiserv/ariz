@@ -7,9 +7,10 @@ function NewArrivalsHome() {
   const navigate = useNavigate();
   const [newArrivals, setNewArrivals] = useState([]);
   const [showCount, setShowCount] = useState(4);
-  const [selectedProduct, setSelectedProduct] = useState(null); // State to track selected product
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [carts, setCarts] = useState([]);
   const [selectedNewArrivals, setSelectedNewArrivals] = useState([]);
+  const [variantSelected, setVariantSelected] = useState(0);
 
   useEffect(() => {
     axios
@@ -17,12 +18,10 @@ function NewArrivalsHome() {
         `https://ariz.onrender.com/api/userProduct/userProduct?limit=${showCount}`
       )
       .then((res) => {
-        console.log(res.data); // Debug: Check the entire response data
-        // Filter the response data to include only new arrivals
         const newArrivalProducts = res.data.filter(
           (product) => product.type === "New Arrival"
         );
-        console.log(newArrivalProducts); // Debug: Check the filtered new arrival products
+        console.log(newArrivalProducts);
         setNewArrivals(newArrivalProducts.reverse());
       })
       .catch((err) => {
@@ -38,15 +37,13 @@ function NewArrivalsHome() {
     setSelectedProduct(null);
   };
 
-  //to make an event we have to use function
   const handleAddtoCart = async (cartProduct) => {
-    console.log(cartProduct);
+    const selectedVariant = cartProduct.variant[variantSelected];
+
     const cart = {
-      productName: cartProduct.productName,
-
-      price: cartProduct.price,
-
-      imageUrl: cartProduct.imageUrl,
+      productName: selectedVariant.productName,
+      price: selectedVariant.price,
+      imageUrl: selectedVariant.image[0],
     };
     var id = localStorage.getItem("id");
     await axios
@@ -63,6 +60,7 @@ function NewArrivalsHome() {
       .catch((err) => {
         console.log(err);
       });
+    console.log(cart);
   };
 
   return (
@@ -74,13 +72,13 @@ function NewArrivalsHome() {
           </h2>
 
           <div class=" py-6 sm:py-8 lg:py-12">
-            <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+            <div class="mx-auto container max-w-screen-2xl px-4 md:px-8">
               <div class="grid gap-x-4 gap-y-8 grid-cols-2  sm:grid-cols-2 md:gap-x-6 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                 {newArrivals.slice(0, showCount).map((newArrival, index) => (
                   <>
                     <div
                       key={index}
-                      className="flex flex-col h-full justify-between"
+                      className="flex flex-col h-full justify-between "
                     >
                       <button
                         onClick={() =>
@@ -88,14 +86,14 @@ function NewArrivalsHome() {
                             state: [newArrival],
                           })
                         }
-                        class={`group relative mb-2 block h-80  sm:h-[500px] overflow-hidden rounded bg-gray-100 shadow-md  lg:mb-3 ${
+                        class={`group relative mb-2 block h-80  sm:h-[480px] overflow-hidden rounded bg-gray-100 shadow-md  lg:mb-3 ${
                           selectedNewArrivals.includes(newArrival._id)
                             ? "border-4 border-primary"
                             : ""
                         }`}
                       >
                         <img
-                          src={newArrival.imageUrl}
+                          src={newArrival.variant[0].image[0]}
                           loading="lazy"
                           alt=""
                           class="h-full w-full  object-center transition duration-200 group-hover:scale-110"
@@ -117,11 +115,11 @@ function NewArrivalsHome() {
                             href="!#"
                             class="text-lg font-semibold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
                           >
-                            {newArrival.productName}
+                            {newArrival.variant[variantSelected].productName}
                           </a>
                           <span class="text-gray-500 py-1 text-lg font-semibold">
                             {" "}
-                            Rs. {newArrival.price}
+                            Rs {newArrival.variant[variantSelected].price}
                           </span>
                         </div>
                       </div>

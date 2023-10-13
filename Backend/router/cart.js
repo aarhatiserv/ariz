@@ -29,7 +29,7 @@ router.get("/cart/:id", (req, res) => {
 router.post("/cart/:id", (req, res) => {
   const id = req.params.id;
   console.log(id);
-  const { productName, price, imageUrl, productSku, color, quantity } =
+  const { productName, price, imageUrl, productSku, color, size, quantity } =
     req.body;
 
   const cart = new Cart({
@@ -37,6 +37,7 @@ router.post("/cart/:id", (req, res) => {
     price,
     imageUrl,
     color,
+    size,
     productSku,
     quantity,
   });
@@ -52,7 +53,7 @@ router.post("/cart/:id", (req, res) => {
 });
 
 router.put("/cart/:id", (req, res) => {
-  const { productName, price, productSku, color, imageUrl } = req.body;
+  const { productName, price, productSku, color, size, imageUrl } = req.body;
 
   Cart.findByIdAndUpdate(
     req.params.id,
@@ -61,6 +62,7 @@ router.put("/cart/:id", (req, res) => {
       productSku,
       price,
       color,
+      size,
       imageUrl,
     },
     (err, cart) => {

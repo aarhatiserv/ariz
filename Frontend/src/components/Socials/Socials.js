@@ -1,27 +1,6 @@
 import React from "react";
 
 function Socials() {
-  // fetch("https://www.instagram.com/ariz.garments/?igshid=MzRlODBiNWFlZA%3D%3D")
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     const posts = data.graphql.user.edge_owner_to_timeline_media.edges;
-
-  //     // Display embedded posts
-  //     const instagramPosts = document.getElementById("instagram-posts");
-  //     posts.forEach((post) => {
-  //       const imgUrl = post.node.display_url;
-  //       const caption = post.node.edge_media_to_caption.edges[0].node.text;
-
-  //       const postElement = document.createElement("div");
-  //       postElement.innerHTML = `
-  //             <img src="${imgUrl}" alt="Instagram post"/>
-  //             <p>${caption}</p>
-  //         `;
-
-  //       instagramPosts.appendChild(postElement);
-  //     });
-  //   })
-  //   .catch((error) => console.log(error));
   return (
     <div>
       <div className=" md:py-0  py-0 ">
@@ -47,7 +26,7 @@ function Socials() {
         >
           <div className="relative group">
             <img
-              src="https://i.ibb.co/QHS8Ngp/pexels-alana-sousa-3294250-1.png"
+              src="/Screenshot 2023-10-10 130112.png"
               alt=""
               className=" lg:block hidden w-full "
             />
@@ -91,12 +70,12 @@ function Socials() {
           </div>
           <div className="relative group">
             <img
-              src="https://i.ibb.co/T8jgRy3/pexels-leah-kelley-1449667-1.png"
+              src="/Screenshot 2023-10-10 130127.png"
               alt="Smiling Girl"
               className=" lg:block hidden w-full "
             />
             <img
-              src="https://i.ibb.co/YD8nNMR/pexels-leah-kelley-1449667-1-1.png"
+              src="/Screenshot 2023-10-10 130127.png"
               alt="Smiling Girl"
               className="lg:hidden block w-full "
             />
@@ -135,12 +114,12 @@ function Socials() {
           </div>
           <div className="relative group">
             <img
-              src="https://i.ibb.co/F3dzNWD/pexels-spencer-selover-775358-1.png"
+              src="/Screenshot 2023-10-10 130145.png"
               alt="Men Posing"
               className=" lg:block hidden w-full "
             />
             <img
-              src="https://i.ibb.co/myWxfSm/pexels-spencer-selover-775358-1-1.png"
+              src="/Screenshot 2023-10-10 130145.png"
               alt="Men Posing"
               className="lg:hidden block w-full "
             />
@@ -179,12 +158,12 @@ function Socials() {
           </div>
           <div className="relative group">
             <img
-              src="https://i.ibb.co/DwcwgDP/pexels-chevanon-photography-1108099-1.png"
+              src="/Screenshot 2023-10-10 130204.png"
               alt="2 puppies"
               className=" lg:block hidden w-full "
             />
             <img
-              src="https://i.ibb.co/5cDQZ2r/pexels-chevanon-photography-1108099-1-1.png"
+              src="/Screenshot 2023-10-10 130204.png"
               alt="2 puppies"
               className="lg:hidden block w-full "
             />
@@ -223,12 +202,12 @@ function Socials() {
           </div>
           <div className="relative group">
             <img
-              src="https://i.ibb.co/QHS8Ngp/pexels-alana-sousa-3294250-1.png"
+              src="/Screenshot 2023-10-10 130220.png"
               alt=""
               className=" lg:block hidden w-full "
             />
             <img
-              src="https://i.ibb.co/mNPBgQN/pexels-alana-sousa-3294250-1-1.png"
+              src="/Screenshot 2023-10-10 130220.png"
               alt=""
               className="lg:hidden block w-full "
             />
@@ -267,12 +246,12 @@ function Socials() {
           </div>
           <div className="relative group">
             <img
-              src="https://i.ibb.co/T8jgRy3/pexels-leah-kelley-1449667-1.png"
+              src="/Screenshot 2023-10-10 130246.png"
               alt="Smiling Girl"
               className=" lg:block hidden w-full "
             />
             <img
-              src="https://i.ibb.co/YD8nNMR/pexels-leah-kelley-1449667-1-1.png"
+              src="/Screenshot 2023-10-10 130246.png"
               alt="Smiling Girl"
               className="lg:hidden block w-full "
             />

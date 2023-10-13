@@ -12,6 +12,7 @@ function TrendingCollection() {
   const [showCount, setShowCount] = useState(4);
   const maxShowCount = 4; // You can adjust the maximum number of items to display
   const [isFilterFixed, setIsFilterFixed] = useState(false); // Step 2
+  const [variantSelected, setVariantSelected] = useState(0);
 
   // Step 3: Create a function to handle scrolling
   const handleScroll = () => {
@@ -49,12 +50,13 @@ function TrendingCollection() {
   }, [showCount]);
 
   const handleAddtoCart = async (cartProduct) => {
+    const selectedVariant = cartProduct.variant[variantSelected];
     var id = localStorage.getItem("id");
     try {
       const cart = {
-        productName: cartProduct.productName,
-        price: cartProduct.price,
-        imageUrl: cartProduct.imageUrl,
+        productName: selectedVariant.productName,
+        price: selectedVariant.price,
+        image: selectedVariant.image,
       };
 
       const response = await axios.post(
@@ -160,7 +162,7 @@ function TrendingCollection() {
                         class="group relative mb-2 block h-80  sm:h-[450px] overflow-hidden rounded bg-gray-100 shadow-sm  lg:mb-3"
                       >
                         <img
-                          src={trending.imageUrl}
+                          src={trending.variant[0].image[0]}
                           loading="lazy"
                           alt=""
                           class="h-full w-full border object-center transition duration-200 group-hover:scale-110"
@@ -176,10 +178,10 @@ function TrendingCollection() {
                             href="!#"
                             className="text-lg font-semibold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
                           >
-                            {trending.productName}
+                            {trending.variant[variantSelected].productName}
                           </a>
                           <span className="text-gray-500 py-1 text-lg font-semibold">
-                            Rs.{trending.price}
+                            Rs. {trending.variant[variantSelected].price}
                           </span>
                         </div>
                       </div>

@@ -6,7 +6,8 @@ function Trending() {
   const navigate = useNavigate();
   const [trendings, setTrendings] = useState([]);
   const [showCount, setShowCount] = useState(4);
-  const maxShowCount = 4; // You can adjust the maximum number of items to display
+  const maxShowCount = 4;
+  const [variantSelected, setVariantSelected] = useState(0);
 
   useEffect(() => {
     axios
@@ -27,12 +28,13 @@ function Trending() {
   }, [showCount]);
 
   const handleAddtoCart = async (cartProduct) => {
+    const selectedVariant = cartProduct.variant[variantSelected];
     var id = localStorage.getItem("id");
     try {
       const cart = {
-        productName: cartProduct.productName,
-        price: cartProduct.price,
-        imageUrl: cartProduct.imageUrl,
+        productName: selectedVariant.productName,
+        price: selectedVariant.price,
+        image: selectedVariant.image,
       };
 
       const response = await axios.post(
@@ -69,10 +71,10 @@ function Trending() {
                         state: [trending],
                       })
                     }
-                    class="group relative mb-2 block h-80  sm:h-[500px] overflow-hidden rounded bg-gray-100 shadow-md  lg:mb-3"
+                    class="group relative mb-2 block h-80  sm:h-[480px] overflow-hidden rounded bg-gray-100 shadow-md  lg:mb-3"
                   >
                     <img
-                      src={trending.imageUrl}
+                      src={trending.variant[0].image[0]}
                       loading="lazy"
                       alt=""
                       className="h-full w-full  object-center transition duration-200 group-hover:scale-110"
@@ -88,10 +90,10 @@ function Trending() {
                         href="!#"
                         className="text-lg font-semibold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
                       >
-                        {trending.productName}
+                        {trending.variant[variantSelected].productName}
                       </a>
                       <span className="text-gray-500 py-1 text-lg font-semibold">
-                        Rs.{trending.price}
+                        Rs. {trending.variant[variantSelected].price}
                       </span>
                     </div>
                   </div>

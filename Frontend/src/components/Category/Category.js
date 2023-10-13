@@ -24,7 +24,7 @@ function Category() {
   );
 
   const Categories = categories.filter(
-    (category) => category.category === "juk"
+    (category) => category.category === "Lehenga"
   );
   return (
     <div className="">

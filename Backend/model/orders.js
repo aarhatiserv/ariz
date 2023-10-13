@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
 const orderItemSchema = new mongoose.Schema({
-  productName: String,
+  productSku: String,
   productId: String,
   quantity: Number,
   price: Number,
   productSku: String,
   color: String,
-
-  // ... other fields as needed
+  size: String,
+  status: String,
 });
 
 const orderSchema = new mongoose.Schema({

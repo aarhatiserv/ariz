@@ -1,38 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Tab } from "@headlessui/react";
-import convertCssColorNameToHex from "convert-css-color-name-to-hex";
+import Review from "./Review";
 
 function ProductDetail({ products, onClose }) {
   const location = useLocation();
-  console.log("Individual Delivery Data:", location.state);
   const [newArrivals, setNewArrivals] = useState([]);
   const [carts, setCarts] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [showCount, setShowCount] = useState(1);
   const [productQuantity, setProductQuantity] = useState(1);
-  // const maxShowCount = 1;
-
   const [breadcrumbs, setBreadcrumbs] = useState([]);
+  const [variantSelected, setVariantSelected] = useState(0);
+
   useEffect(() => {
     if (location.state) {
-      const productData = location.state[0]; // Assuming product data is stored in an array
+      const productData = location.state[0];
       setNewArrivals(productData);
-
-      // Check if the product name is available in the state
       if (productData.productName) {
-        // Include the product name in the breadcrumbs
         setBreadcrumbs([
           { label: "Home", path: "/" },
           { label: "Category", path: "/product" },
           { label: productData.productName, path: location.pathname },
         ]);
       } else {
-        // If the product name is not available, use a default label
         setBreadcrumbs([
           { label: "Home", path: "/" },
           { label: "Category", path: "/product" },
@@ -54,20 +48,27 @@ function ProductDetail({ products, onClose }) {
     setNewArrivals(location.state);
   }, [showCount]);
 
-  const handleAddtoCart = async (cartProduct) => {
-    console.log(cartProduct);
+  const handleAddtoCart = async (
+    cartProduct,
+    selectedColor,
+    selectedSize,
+    handleType
+  ) => {
+    const selectedVariant = cartProduct.variant[variantSelected];
+
     const cart = {
-      productName: cartProduct.productName,
-      price: cartProduct.price,
-      imageUrl: cartProduct.imageUrl,
-      productSku: cartProduct.productSku,
-      color: cartProduct.color,
+      productName: selectedVariant.productName,
+      price: selectedVariant.price,
+      image: selectedVariant.image,
+      productSku: selectedVariant.masterSku,
+      color: selectedVariant.color,
+      size: selectedSize,
       quantity: productQuantity,
     };
 
     var id = localStorage.getItem("id");
     await axios
-      .post(`https://ariz.onrender.com/api/cart/cart/${id}`, cart)
+      .post(`http://localhost:5000/api/cart/cart/${id}`, cart)
       .then((res) => {
         setCarts(res.data);
         console.log(res.data);
@@ -88,6 +89,9 @@ function ProductDetail({ products, onClose }) {
       .catch((err) => {
         console.log(err);
       });
+    if (handleType === "BUY") {
+      navigate("/checkout");
+    }
   };
 
   const decreaseQuantity = () => {
@@ -102,7 +106,7 @@ function ProductDetail({ products, onClose }) {
     setProductQuantity(quantity);
   };
 
-  const [favorites, setFavorites] = useState([]); // Step 1: Manage favorite products
+  const [favorites, setFavorites] = useState([]);
 
   const isFavorite = (productId) => {
     return favorites.includes(productId);
@@ -111,15 +115,12 @@ function ProductDetail({ products, onClose }) {
   const navigate = useNavigate();
 
   const toggleFavorite = (productId) => {
-    // Logic to add/remove the product from favorites and update local storage
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
     if (favorites.includes(productId)) {
-      // Remove from favorites
       const updatedFavorites = favorites.filter((id) => id !== productId);
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     } else {
-      // Add to favorites
       favorites.push(productId);
       localStorage.setItem("favorites", JSON.stringify(favorites));
     }
@@ -127,20 +128,21 @@ function ProductDetail({ products, onClose }) {
   const splitColors = (colors) => {
     return colors.split(",");
   };
-  // Function to toggle favorite status and store IDs in local storage
-  const [selectedColor, setSelectedColor] = useState(""); // State for selected color
 
-  // ... (rest of the code remains the same)
-
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
   const handleColorClick = (color) => {
     setSelectedColor(color);
+  };
+  const handleSizeClick = (size) => {
+    setSelectedSize(size.trim());
   };
 
   return (
     <div>
       <ToastContainer />
 
-      <div class=" py-6 sm:py-8 lg:py-12" style={{ background: "#FEFCFB" }}>
+      <div class=" py-6 sm:py-8 lg:py-10" style={{ background: "#FEFCFB" }}>
         <nav className="py-3 px-0 mx-auto max-w-screen-xl  md:px-1">
           <ul className="flex mx-auto max-w-screen-xl px-4 tracking-wide md:px-8 font-medium text-base text-gray-800">
             {breadcrumbs.map((breadcrumb, index) => (
@@ -162,64 +164,40 @@ function ProductDetail({ products, onClose }) {
             <>
               <div class="grid gap-16 md:grid-cols-2">
                 <div class="space-y-4">
-                  <div class="relative overflow-hidden rounded border border-gray-100 ">
-                    <img
-                      src={
-                        selectedColor
-                          ? `${newArrival.imageUrl}-${selectedColor.trim()}.jpg`
-                          : newArrival.imageUrl // Use the selected color for the image source
-                      }
-                      loading="lazy"
-                      alt=""
-                      class="h-full   w-full object-cover object-center"
-                    />
-
-                    <span class="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">
-                      sale
-                    </span>
-                  </div>
+                  {newArrival.variant[variantSelected].image.length > 0 && (
+                    <div class="relative overflow-hidden  border rounded-lg bg-gray-100">
+                      <img
+                        src={newArrival.variant[variantSelected].image[0]}
+                        loading="lazy"
+                        alt=""
+                        class="h-full w-full  object-center"
+                      />
+                      <span class="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">
+                        sale
+                      </span>
+                    </div>
+                  )}
 
                   <div class="grid grid-cols-4 gap-4">
-                    <div class="overflow-hidden border rounded-lg bg-gray-100">
-                      <img
-                        src={newArrival.imageUrl}
-                        loading="lazy"
-                        alt=""
-                        class="h-full w-full object-cover object-center"
-                      />
-                    </div>
-
-                    <div class="overflow-hidden border rounded-lg bg-gray-100">
-                      <img
-                        src={newArrival.imageUrl}
-                        loading="lazy"
-                        alt=""
-                        class="h-full w-full object-cover object-center"
-                      />
-                    </div>
-                    <div class="overflow-hidden border rounded-lg bg-gray-100">
-                      <img
-                        src={newArrival.imageUrl}
-                        loading="lazy"
-                        alt=""
-                        class="h-full w-full object-cover object-center"
-                      />
-                    </div>
-                    <div class="overflow-hidden border rounded-lg bg-gray-100">
-                      <img
-                        src={newArrival.imageUrl}
-                        loading="lazy"
-                        alt=""
-                        class="h-full w-full object-cover object-center"
-                      />
-                    </div>
+                    {newArrival.variant[variantSelected].image.map((item) => {
+                      return (
+                        <div class="relative overflow-hidden border rounded-lg  bg-gray-100 ">
+                          <img
+                            src={item}
+                            loading="lazy"
+                            alt=""
+                            class="h-full w-full object-cover object-center "
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
                 <div class="md:py-8">
                   <div class="mb-2 md:mb-3">
                     <h2 class="text-2xl font-medium font-heading text-gray-800 lg:text-3xl">
-                      {newArrival.productName}
+                      {newArrival.variant[variantSelected].productName}
                     </h2>
                   </div>
 
@@ -272,57 +250,82 @@ function ProductDetail({ products, onClose }) {
                     </div>
                   </div>
 
-                  <div class="mb-4 md:mb-6">
-                    <span class="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-base">
+                  <div className="mb-4 md:mb-6">
+                    <span className="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-lg">
                       Color
                     </span>
 
-                    <div class="flex flex-wrap gap-3">
-                      {splitColors(newArrival.colors).map((color, index) => (
-                        <button
-                          key={index}
-                          style={{ backgroundColor: color.trim() }}
-                          className={`rounded-full h-10 w-10 ${
-                            selectedColor === color.trim()
-                              ? "border-2 border-black"
-                              : ""
-                          }`}
-                          onClick={() => handleColorClick(color.trim())}
-                        ></button>
-                      ))}
+                    <div className="flex flex-wrap gap-3">
+                      {newArrival.variant.map((item, index) => {
+                        return (
+                          <div
+                            className="cursor-pointer"
+                            onClick={() => {
+                              setVariantSelected(index);
+                            }}
+                          >
+                            <div key={index} className="relative">
+                              <img
+                                src={item.image}
+                                loading="lazy"
+                                alt=""
+                                class="rounded-full border  object-contain object-center active:border-black h-16 w-16 cursor-pointer"
+                              />
+                              <div className="text-center mt-2 text-sm font-semibold">
+                                {item.color}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
 
                   <div class="mb-8 md:mb-6">
-                    <span class="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-base">
+                    <span class="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-lg">
                       Size
                     </span>
 
                     <div class="flex flex-wrap gap-3">
-                      {newArrival.size.split(",").map((size, index) => (
-                        <button
-                          type="button"
-                          key={index}
-                          class="flex h-10 w-12 items-center justify-center rounded border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200"
-                        >
-                          {size.trim()}
-                        </button>
-                      ))}
+                      {newArrival.size.split(",").map((size, index) => {
+                        console.log("Size:", size);
+                        return (
+                          <button
+                            type="button"
+                            key={index}
+                            class={`flex h-10 w-12 items-center justify-center rounded border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200 ${
+                              selectedSize === size.trim() ? "border-black" : ""
+                            }`}
+                            onClick={() => handleSizeClick(size.trim())}
+                          >
+                            {size.trim()}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 
                   <div class="mb-4">
                     <div class="flex items-end gap-2">
                       <span class="text-xl font-medium text-gray-800 md:text-2xl">
-                        Rs. {newArrival.price}
+                        ₹ {newArrival.variant[variantSelected].price}
                       </span>
                     </div>
                   </div>
+
+                  <div class="mb-1 mt-3 flex items-center gap-2 text-gray-600">
+                    <span class="text-lg font-medium text-gray-500  flex">
+                      MRP :{" "}
+                      <p className=" px-2 font-medium">
+                        ₹ {newArrival.variant[variantSelected].mrp}
+                      </p>
+                    </span>
+                  </div>
                   <div class="mb-1 mt-3 flex items-center gap-2 text-gray-500">
-                    <span class="text-xl font-medium text-gray-500  flex">
+                    <span class="text-lg font-medium text-gray-500  flex">
                       Product SKU :{" "}
-                      <p className=" px-2 font-normal">
-                        {newArrival.productSku}
+                      <p className=" px-2 font-medium">
+                        {newArrival.variant[variantSelected].masterSku}
                       </p>
                     </span>
                   </div>
@@ -366,8 +369,10 @@ function ProductDetail({ products, onClose }) {
                     </div>
 
                     <button
-                      onClick={() => handleAddtoCart(newArrival)}
-                      class="inline-block w-1/2 flex-1 rounded border border-black bg-white px-8 py-4 text-center text-sm font-semibold text-black outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-200 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-xl"
+                      onClick={() =>
+                        handleAddtoCart(newArrival, selectedColor, selectedSize)
+                      }
+                      class="inline-block w-1/2 flex-1 rounded border border-black bg-white px-8 py-4 text-center text-sm font-semibold text-black outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-200 focus-visible:ring active-bg-indigo-700 sm:flex-none md:text-xl"
                     >
                       Add to cart
                     </button>
@@ -394,7 +399,7 @@ function ProductDetail({ products, onClose }) {
                       </button>
                     ) : (
                       <button
-                        onClick={() => toggleFavorite(newArrival.productId)} // Step 3: Handle favorite toggle
+                        onClick={() => toggleFavorite(newArrival.productId)}
                         className="text-gray-500 bg-gray-200 rounded-lg p-4 hover:text-red-500"
                       >
                         <svg
@@ -415,13 +420,20 @@ function ProductDetail({ products, onClose }) {
                     )}
                   </div>
                   <div class="mt-4">
-                    <Link
-                      to="/checkout"
-                      onClick={() => handleAddtoCart(newArrival)}
+                    <button
+                      // to="/checkout"
+                      onClick={() =>
+                        handleAddtoCart(
+                          newArrival,
+                          selectedColor,
+                          selectedSize,
+                          "BUY"
+                        )
+                      }
                       class="inline-block w-full flex-1 rounded border border-black bg-black px-8 py-4 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-200 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-xl"
                     >
                       Buy Now
-                    </Link>
+                    </button>
                   </div>
                   <div class="mb-3 mt-7 flex items-center gap-2  text-gray-500">
                     <svg
@@ -476,9 +488,15 @@ function ProductDetail({ products, onClose }) {
                     </Tab.List>
                     <hr className="border-gray-300" />
                     <Tab.Panels className="py-4 text-sm sm:text-lg">
-                      <Tab.Panel>{newArrival.description}</Tab.Panel>
-                      <Tab.Panel>{newArrival.information}</Tab.Panel>
-                      <Tab.Panel>{newArrival.review}</Tab.Panel>
+                      <Tab.Panel>
+                        {newArrival.variant[variantSelected].description}
+                      </Tab.Panel>
+                      <Tab.Panel>
+                        {newArrival.variant[variantSelected].additional}
+                      </Tab.Panel>
+                      <Tab.Panel>
+                        <Review />
+                      </Tab.Panel>
                     </Tab.Panels>
                   </Tab.Group>
                 </div>

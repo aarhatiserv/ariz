@@ -10,6 +10,9 @@ const cartSchema = new mongoose.Schema({
   productSku: {
     type: String,
   },
+  size: {
+    type: String,
+  },
   color: {
     type: String,
   },

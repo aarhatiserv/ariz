@@ -19,16 +19,6 @@ const banner = require("./router/banner");
 const banner2 = require("./router/banner2");
 const orders = require("./router/orders");
 const email = require("./email");
-// const ShipDetail = require("./ShipDetail");
-
-// const corsOptions = {
-//   origin:
-//     "543911932766-cq750g05dir8g2pd3qrtt8kkskulkvjl.apps.googleusercontent.com",
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   credentials: true,
-// };
-
-// app.use(cors(corsOptions));
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
