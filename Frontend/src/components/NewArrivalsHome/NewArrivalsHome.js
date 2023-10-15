@@ -98,15 +98,6 @@ function NewArrivalsHome() {
                           alt=""
                           class="h-full w-full  object-center transition duration-200 group-hover:scale-110"
                         />
-
-                        <div class="absolute left-0 bottom-2 flex gap-2">
-                          <span class="rounded-r-lg bg-red-500 px-3 py-1.5 text-sm font-semibold uppercase tracking-wider text-white">
-                            -50%
-                          </span>
-                          <span class="rounded-lg bg-white px-3 py-1.5 text-sm font-bold uppercase tracking-wider text-gray-800">
-                            New
-                          </span>
-                        </div>
                       </button>
 
                       <div class="flex items-center justify-center gap-2 px-2">

@@ -39,10 +39,12 @@ router.get("/category/:category", async (req, res) => {
 });
 
 router.post("/category", (req, res) => {
-  const { category, imageUrl } = req.body;
+  const { category, subcategory, subcategory1, imageUrl } = req.body;
 
   const product = new Different({
     category,
+    subcategory,
+    subcategory1,
     imageUrl,
   });
 

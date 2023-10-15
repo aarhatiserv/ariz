@@ -59,7 +59,7 @@ function ProductDetail({ products, onClose }) {
     const cart = {
       productName: selectedVariant.productName,
       price: selectedVariant.price,
-      image: selectedVariant.image,
+      imageUrl: selectedVariant.image[0],
       productSku: selectedVariant.masterSku,
       color: selectedVariant.color,
       size: selectedSize,
@@ -68,7 +68,7 @@ function ProductDetail({ products, onClose }) {
 
     var id = localStorage.getItem("id");
     await axios
-      .post(`http://localhost:5000/api/cart/cart/${id}`, cart)
+      .post(`https://ariz.onrender.com/api/cart/cart/${id}`, cart)
       .then((res) => {
         setCarts(res.data);
         console.log(res.data);
@@ -142,7 +142,10 @@ function ProductDetail({ products, onClose }) {
     <div>
       <ToastContainer />
 
-      <div class=" py-6 sm:py-8 lg:py-10" style={{ background: "#FEFCFB" }}>
+      <div
+        class=" py-6 sm:py-8 lg:py-10 mb-10"
+        style={{ background: "#FEFCFB" }}
+      >
         <nav className="py-3 px-0 mx-auto max-w-screen-xl  md:px-1">
           <ul className="flex mx-auto max-w-screen-xl px-4 tracking-wide md:px-8 font-medium text-base text-gray-800">
             {breadcrumbs.map((breadcrumb, index) => (
@@ -266,7 +269,7 @@ function ProductDetail({ products, onClose }) {
                           >
                             <div key={index} className="relative">
                               <img
-                                src={item.image}
+                                src={item.image[0]}
                                 loading="lazy"
                                 alt=""
                                 class="rounded-full border  object-contain object-center active:border-black h-16 w-16 cursor-pointer"
@@ -305,12 +308,13 @@ function ProductDetail({ products, onClose }) {
                     </div>
                   </div>
 
-                  <div class="mb-4">
-                    <div class="flex items-end gap-2">
-                      <span class="text-xl font-medium text-gray-800 md:text-2xl">
+                  <div class="mb-1 flex items-center gap-2 text-gray-600">
+                    <span class="text-xl font-medium text-gray-800 md:text-xl flex">
+                      Now available at :{" "}
+                      <p className=" px-2 font-medium">
                         ₹ {newArrival.variant[variantSelected].price}
-                      </span>
-                    </div>
+                      </p>
+                    </span>
                   </div>
 
                   <div class="mb-1 mt-3 flex items-center gap-2 text-gray-600">

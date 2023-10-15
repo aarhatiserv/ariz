@@ -56,7 +56,7 @@ function TrendingCollection() {
       const cart = {
         productName: selectedVariant.productName,
         price: selectedVariant.price,
-        image: selectedVariant.image,
+        imageUrl: selectedVariant.image[0],
       };
 
       const response = await axios.post(

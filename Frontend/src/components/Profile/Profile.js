@@ -26,15 +26,6 @@ function Profile() {
                   Full Name : <p class="text-gray-700 px-2">{username}</p>
                 </h2>
 
-                <h2 class="text-xl font-medium mb-3 flex">
-                  Delivery Address : <p class="text-gray-700 px-2">Delhi</p>
-                </h2>
-
-                <h2 class="text-xl font-medium flex  mb-4">
-                  Contact Number :{" "}
-                  <p class="text-gray-700 px-2">+91 9467032480</p>{" "}
-                </h2>
-
                 <h2 class="text-xl font-medium flex  mb-4">
                   Email id : <p class="text-gray-700 px-2">{email}</p>{" "}
                 </h2>

@@ -97,7 +97,7 @@ function NewArrivalCollection({ page }) {
     const cart = {
       productName: selectedVariant.productName,
       price: selectedVariant.price,
-      image: selectedVariant.image,
+      imageUrl: selectedVariant.image[0],
     };
     var id = localStorage.getItem("id");
     await axios

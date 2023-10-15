@@ -48,7 +48,7 @@ function Checkout({ cart }) {
     var total = 0;
     var id = localStorage.getItem("id");
     axios
-      .get(`http://localhost:5000/api/cart/cart/${id}`)
+      .get(`https://ariz.onrender.com/api/cart/cart/${id}`)
       .then((res) => {
         console.log("API Response:", res.data);
         setCartProducts(res.data.cart);

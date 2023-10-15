@@ -55,7 +55,7 @@ function NewArrivalCollection() {
     const cart = {
       productName: selectedVariant.productName,
       price: selectedVariant.price,
-      image: selectedVariant.image,
+      imageUrl: selectedVariant.image[0],
       quantity: 1,
     };
     var id = localStorage.getItem("id");
@@ -151,15 +151,6 @@ function NewArrivalCollection() {
                         alt=""
                         class="h-full w-full border object-center transition duration-200 group-hover:scale-110"
                       />
-
-                      <div class="absolute left-0 bottom-2 flex gap-2">
-                        <span class="rounded-r-lg bg-red-500 px-3 py-1.5 text-sm font-semibold uppercase tracking-wider text-white">
-                          -50%
-                        </span>
-                        <span class="rounded-lg bg-white px-3 py-1.5 text-sm font-bold uppercase tracking-wider text-gray-800">
-                          New
-                        </span>
-                      </div>
                     </button>
                     <div class="flex items-center justify-center gap-2 px-2">
                       <div class="flex flex-col">
