@@ -79,9 +79,6 @@ function Trending() {
                       alt=""
                       className="h-full w-full  object-center transition duration-200 group-hover:scale-110"
                     />
-                    <span className="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">
-                      Sale
-                    </span>
                   </button>
 
                   <div className="flex items-center justify-center gap-2  px-2">

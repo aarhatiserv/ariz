@@ -158,11 +158,11 @@ function NewArrivalCollection() {
                           href="!#"
                           class="text-lg font-semibold py-1 text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
                         >
-                          {newArrival.productName}
+                          {newArrival.variant[variantSelected].productName}
                         </a>
                         <span class="text-gray-500 py-1 font-semibold">
                           {" "}
-                          Rs. {newArrival.price}
+                          Rs. {newArrival.variant[variantSelected].price}
                         </span>
                       </div>
                     </div>

@@ -1,9 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Slide, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function Footer() {
+function Contact() {
+  const [status, setStatus] = useState("Subscribe");
+  const [mailSent, setMailSent] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("Sending...");
+    console.log("Sender:" + e.target.elements.email.value);
+    let details = {
+      email: e.target.elements.email.value,
+    };
+    console.log(details);
+    let response = await fetch("https://ariz.onrender.com/api/mail/mail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(details),
+    });
+    setStatus("Submit");
+    let result = await response.json();
+    console.log(result);
+    if (result.status === "Message Sent") {
+      toast.success("you will be notified soon !", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        transition: Slide,
+        theme: "dark",
+      });
+      setMailSent(true);
+    } else {
+      toast.error("Message failed to send.", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        transition: Slide,
+        theme: "light",
+      });
+    }
+  };
+
   return (
     <div>
+      <ToastContainer />
       <div class="bg-black">
         <div class="max-w-screen-2xl mx-auto px-4 sm:px-6  py-12 text-gray-800 flex flex-wrap justify-center flex justify-between">
           <div class="p-5">
@@ -29,53 +73,50 @@ function Footer() {
             </Link>
           </div>
           <div class="p-5">
+            <div class="text-2xl font-bold   text-white ">Selections</div>
+
+            <Link to="/fav" class="my-3 block text-gray-100 " href="/#">
+              Wishlist
+              <span class="text-teal-600 text-xs p-1"></span>
+            </Link>
+            <Link to="/blog" class="my-3 block text-gray-100 " href="/#">
+              Blogs
+              <span class="text-teal-600 text-xs p-1"></span>
+            </Link>
+          </div>
+          <div class="p-5">
             <div class="text-2xl font-bold   text-white ">Customer Service</div>
 
-            <a class="my-3 block text-gray-100 " href="/#">
-              My Account <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Checkout Page <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Help Center <span class="text-teal-600 text-xs p-1">New</span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Terms and Conditions{" "}
+            <Link to="/order" class="my-3 block text-gray-100 " href="/#">
+              My Account
               <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Deliveries and Refunds{" "}
-              <span class="text-teal-600 text-xs p-1">New</span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Cart Page <span class="text-teal-600 text-xs p-1">New</span>
-            </a>
+            </Link>
+            <Link to="/checkout" class="my-3 block text-gray-100 " href="/#">
+              Checkout Page
+              <span class="text-teal-600 text-xs p-1"></span>
+            </Link>
+            <Link to="/contact" class="my-3 block text-gray-100 " href="/#">
+              Help Center
+              <span class="text-teal-600 text-xs p-1"></span>
+            </Link>
+            <Link to="/term" class="my-3 block text-gray-100 " href="/#">
+              Terms & Conditions <span class="text-teal-600 text-xs p-1"></span>
+            </Link>
+            <Link to="/refund" class="my-3 block text-gray-100 " href="/#">
+              Deliveries & Refund Policies{" "}
+              <span class="text-teal-600 text-xs p-1"></span>
+            </Link>
           </div>
-          <div class="p-5">
-            <div class="text-2xl font-bold  text-gray-100  ">More</div>
 
-            <a class="my-3 block text-gray-100 " href="/#">
-              Gift Card <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              LookBook <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Rewards Program <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Wedding Dress <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Host a Party <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-            <a class="my-3 block text-gray-100 " href="/#">
-              Extended Sizing <span class="text-teal-600 text-xs p-1"></span>
-            </a>
-          </div>
           <div class="p-5">
-            <div class="">
+            <form
+              class=""
+              id="contact"
+              action=""
+              encType="multipart/form-data"
+              method="post"
+              onSubmit={handleSubmit}
+            >
               <h3 class="text-2xl font-bold leading-6 text-white">
                 Subscribe to our Newsletter
               </h3>
@@ -83,16 +124,16 @@ function Footer() {
                 Don't miss any updates and fashion tips
               </p>
               <div class="mt-6 sm:flex sm:max-w-md">
-                <label for="email-address" class="sr-only">
+                <label htmlFor="email" class="sr-only">
                   {" "}
                   Email address
                 </label>
                 <input
                   type="email"
+                  id="email"
                   name="email"
-                  id="email-address"
-                  autocomplete="email"
-                  required=""
+                  required
+                  autoFocus
                   class="w-full min-w-0 appearance-none rounded-md border-gray-300 bg-white px-[calc(theme(spacing.3)-1px)] py-[calc(theme(spacing[1.5])-1px)] text-base leading-7 text-gray-900 placeholder-gray-400 shadow-sm focus:border-indigo-600 focus:ring-indigo-600 sm:w-64 sm:text-sm sm:leading-6 xl:w-full"
                   placeholder="E-Mail Address"
                 />
@@ -103,13 +144,16 @@ function Footer() {
                       type="submit"
                     >
                       <div class="relative">
-                        <div class="">Subscribe</div>
+                        <button class="" type="submit">
+                          {" "}
+                          {status}
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -117,4 +161,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default Contact;

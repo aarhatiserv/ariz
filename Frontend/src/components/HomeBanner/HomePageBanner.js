@@ -5,6 +5,7 @@ import "swiper/css/navigation";
 import SwiperCore, { Autoplay } from "swiper";
 import "swiper/css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function HomePageBanner() {
   SwiperCore.use([Autoplay]);
@@ -40,13 +41,13 @@ function HomePageBanner() {
                 <div className="lg:flex md:flex block  justify-center">
                   <div className="flex "></div>
 
-                  <div>
+                  <Link to="/trending">
                     <img
                       src={banner.imageUrl}
                       alt="banner"
                       className=" h-[200px] object-fit sm:h-full"
                     />
-                  </div>
+                  </Link>
                 </div>
               </SwiperSlide>
             ))}

@@ -23,13 +23,13 @@ function ProductDetail({ products, onClose }) {
       if (productData.productName) {
         setBreadcrumbs([
           { label: "Home", path: "/" },
-          { label: "Category", path: "/product" },
+          { label: "Category", path: "/product/:category" },
           { label: productData.productName, path: location.pathname },
         ]);
       } else {
         setBreadcrumbs([
           { label: "Home", path: "/" },
-          { label: "Category", path: "/product" },
+          { label: "Category", path: "/product/:category" },
           { label: "Product", path: location.pathname },
         ]);
       }
@@ -94,37 +94,61 @@ function ProductDetail({ products, onClose }) {
     }
   };
 
+  const handleAddtoFav = async (
+    favProduct,
+    selectedColor,
+    selectedSize,
+    handleType
+  ) => {
+    const selectedVariant = favProduct.variant[variantSelected];
+
+    const fav = {
+      productName: selectedVariant.productName,
+      price: selectedVariant.price,
+      imageUrl: selectedVariant.image[0],
+      productSku: selectedVariant.masterSku,
+      color: selectedVariant.color,
+      size: selectedSize,
+    };
+
+    var id = localStorage.getItem("id");
+    await axios
+      .post(`http://localhost:5000/api/fav/fav/${id}`, fav)
+      .then((res) => {
+        setCarts(res.data);
+        console.log(res.data);
+        toast("Added To Favourite !", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          rtl: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          pauseOnFocusLoss: true,
+          progress: undefined,
+          transition: Slide,
+          theme: "dark",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const decreaseQuantity = () => {
     if (productQuantity > 1) {
       let quantity = productQuantity - 1;
       setProductQuantity(quantity);
     }
   };
-
   const increaseQuantity = () => {
     let quantity = productQuantity + 1;
     setProductQuantity(quantity);
   };
 
-  const [favorites, setFavorites] = useState([]);
-
-  const isFavorite = (productId) => {
-    return favorites.includes(productId);
-  };
-
   const navigate = useNavigate();
 
-  const toggleFavorite = (productId) => {
-    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-    if (favorites.includes(productId)) {
-      const updatedFavorites = favorites.filter((id) => id !== productId);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-    } else {
-      favorites.push(productId);
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-    }
-  };
   const splitColors = (colors) => {
     return colors.split(",");
   };
@@ -381,47 +405,27 @@ function ProductDetail({ products, onClose }) {
                       Add to cart
                     </button>
 
-                    {isFavorite(newArrival.productId) ? (
-                      <button
-                        onClick={() => toggleFavorite(newArrival.productId)}
-                        className="text-red-500 bg-gray-200 rounded-lg hover:text-gray-500"
+                    <button
+                      className="text-red-500 p-4 bg-gray-200 rounded-lg hover:text-gray-500"
+                      onClick={() =>
+                        handleAddtoFav(newArrival, selectedColor, selectedSize)
+                      }
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                          />
-                        </svg>
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => toggleFavorite(newArrival.productId)}
-                        className="text-gray-500 bg-gray-200 rounded-lg p-4 hover:text-red-500"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                          />
-                        </svg>
-                      </button>
-                    )}
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                        />
+                      </svg>
+                    </button>
                   </div>
                   <div class="mt-4">
                     <button

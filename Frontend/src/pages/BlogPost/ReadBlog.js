@@ -24,7 +24,7 @@ function ReadArticle() {
               <img
                 src={article?.data.banner.url}
                 alt={article?.data.banner.alt}
-                class="w-full mt-6  sm:h-[300px] object-center lg:rounded"
+                class="w-full mt-6  sm:h-[500px] object-center lg:rounded"
               />
             </div>
 
@@ -35,7 +35,7 @@ function ReadArticle() {
                     field={article.data.desc}
                     components={{
                       paragraph: ({ children }) => (
-                        <p className="mb-6">{children}</p>
+                        <p className="mb-6 ">{children}</p>
                       ),
                     }}
                   />
@@ -46,22 +46,24 @@ function ReadArticle() {
                 <div class="p-4 border-t border-b  md:border md:rounded">
                   <div class="flex py-2">
                     <img
-                      src=""
+                      src="https://arizgarments.com/logo%20(2)%201.png"
                       class="h-12 w-12 rounded-full mr-2 object-cover"
                       alt=""
                     />
                     <div>
-                      <p class="font-semibold  text-base"> Shamim Hazari </p>
-                      <p class="font-semibold  text-sm"> Writer </p>
+                      <p class="font-semibold  text-base"> Ariz Garments </p>
+                      <p class="font-semibold  text-sm"> Fashion & Style </p>
                     </div>
                   </div>
                   <p class=" text-justify py-3">
-                    Shamim Hazari writes about technology Yourself required no
-                    at thoughts delicate landlord it be. Branched dashwood do is
-                    whatever it.
+                    Ariz garments posts about new trending fashion which will
+                    make you gloom and will make you look stylish.
                   </p>
                   <button class="px-2 py-1  bg-blue-700 flex w-full items-center justify-center rounded">
-                    <a href="!"> Follow</a>
+                    <a href="https://www.instagram.com/ariz.garments/?igshid=MzRlODBiNWFlZA%3D%3D">
+                      {" "}
+                      Follow us on instagram
+                    </a>
 
                     <i class="bx bx-user-plus ml-2"></i>
                   </button>

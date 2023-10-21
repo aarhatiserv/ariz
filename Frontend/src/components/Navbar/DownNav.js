@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import "../../App.css";
+
+// import MenuItems from "./MenuItems";
 import axios from "axios";
 
 function DownNav() {
@@ -11,6 +13,11 @@ function DownNav() {
   const [carts, setCarts] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  // const menuItems = [
+  //   { id: 1, label: "Item 1" },
+  //   { id: 2, label: "Item 2" },
+  //   { id: 3, label: "Item 3" },
+  // ];
   const trigger = useRef(null);
   const dropdown = useRef(null);
   const dropdownRef = useRef(null);
@@ -83,9 +90,7 @@ function DownNav() {
     console.log(cartProduct);
     const cart = {
       productName: cartProduct.productName,
-
       price: cartProduct.price,
-
       imageUrl: cartProduct.imageUrl,
       quantity: 1,
     };
@@ -107,17 +112,105 @@ function DownNav() {
       });
   };
 
+  const renderSubcategories = (subcategories) => {
+    return subcategories.map((subcategory, index) => (
+      <li key={`subcategory-${index}`} className="px-3 py-1 hover:bg-gray-100">
+        {subcategory}
+      </li>
+    ));
+  };
+
+  const renderCategories = (categories) => {
+    return categories.map((category, index) => {
+      const subcategories = [];
+      if (category.subcategory) {
+        subcategories.push(
+          <li
+            key={`subcategory-${index}`}
+            className="relative px-3 py-1 hover:bg-gray-100"
+          >
+            <Link
+              to={
+                !category.subcategory1 &&
+                `/product/${category.category}/${category.subcategory}`
+              }
+            >
+              <button className="w-full text-left flex items-center outline-none focus:outline-none">
+                <span className="pr-1 flex-1">{category.subcategory}</span>
+                {category.subcategory1 && (
+                  <span className="mr-auto">
+                    <svg
+                      className="fill-current h-4 w-4 transition duration-150 ease-in-out"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </span>
+                )}
+              </button>
+            </Link>
+            {category.subcategory1 && (
+              <ul className="bg-white border rounded-sm absolute top-0 right-0 transition duration-150 ease-in-out origin-top-left">
+                <Link
+                  to={`/product/${category.category}/${category.subcategory}/${category.subcategory1}`}
+                >
+                  <li
+                    key={`subcategory1-${index}`}
+                    className="px-3 py-1 hover:bg-gray-100"
+                  >
+                    {category.subcategory1}
+                  </li>
+                </Link>
+              </ul>
+            )}
+          </li>
+        );
+      }
+      return (
+        <li
+          key={`category-${index}`}
+          className="rounded-sm relative px-3 py-1 hover:bg-gray-100 w-36"
+        >
+          <Link
+            to={subcategories.length === 0 && `/product/${category.category}`}
+          >
+            <button className="w-44 text-left flex items-center outline-none focus:outline-none">
+              <span className="pr-1 flex">{category.category}</span>
+              {subcategories.length > 0 && (
+                <span className="mr-auto">
+                  <svg
+                    className="fill-current h-4 w-4 transition duration-150 ease-in-out"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </span>
+              )}
+            </button>
+          </Link>
+          {subcategories.length > 0 && (
+            <ul className="bg-white border rounded-sm absolute top-0 right-0 transition duration-150 ease-in-out origin-top-left w-full">
+              {renderSubcategories(subcategories)}
+            </ul>
+          )}
+        </li>
+      );
+    });
+  };
+
   return (
     <div className="sticky-container bg-white opacity-90">
-      <div class="px-4 py-7  mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-full md:px-24 lg:px-11">
-        <div class="relative flex items-center justify-between">
+      <div className="px-4 py-7  mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-full md:px-24 lg:px-11">
+        <div className="relative flex items-center justify-between">
           <img
             src="/logo (2) 1.png"
             alt=""
             className="ml-1 h-10 w-16 sm:h-auto sm:w-24"
           />
           <ul
-            class="flex items-center hidden font-mono text-[23px] font-heading  space-x-12 lg:flex"
+            className="flex items-center hidden font-mono text-[23px] font-heading  space-x-12 lg:flex"
             style={{ color: "#AD5C5C" }}
           >
             <li>
@@ -128,30 +221,24 @@ function DownNav() {
             </li>
 
             <li>
-              <div
-                className="relative cursor-pointer"
-                // ref={dropdownRef}
-              >
-                <a onClick={toggleDropdown}>Product ⮟</a>
-                {isMenuOpen && (
-                  <div className="absolute mt-2 -ml-6 bg-white z-50 border rounded shadow-md">
-                    <ul className="py-2 w-40 text-center">
-                      {categories.map((category, index) => (
-                        <React.Fragment key={index}>
-                          <li>
-                            <Link to={`/product/${category.category}`}>
-                              {category.category}
-                            </Link>
-                          </li>
-                          <hr className="w-full border-gray-100" />
-                        </React.Fragment>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+              <div className="group inline-block">
+                <button className="outline-none focus:outline-none px-3  py-1 bg-white rounded-sm flex items-center ">
+                  <span className="pr-1 flex-1">Product</span>
+                  <span>
+                    <svg
+                      className="fill-current h-4 w-4 transform group-hover:-rotate-180 transition duration-150 ease-in-out"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </span>
+                </button>
+                <ul className="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute transition duration-150 ease-in-out origin-top">
+                  {renderCategories(categories)}
+                </ul>
               </div>
             </li>
-
             <li>
               <Link to="/career">Career</Link>{" "}
             </li>
@@ -163,28 +250,15 @@ function DownNav() {
               <Link to="/contact">Contact Us</Link>
             </li>
           </ul>
-          <ul class="flex items-center hidden space-x-8 lg:flex">
-            <div class=" flex font-bold items-center space-x-4 text-black ">
-              {/* <a class="" href="#!">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  fill="currentColor"
-                  class="bi bi-search"
-                  viewBox="0 0 24 24"
-                >
-                  {" "}
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />{" "}
-                </svg>
-              </a> */}
+          <ul className="flex items-center hidden space-x-8 lg:flex">
+            <div className=" flex font-bold items-center space-x-4 text-black ">
               <Link to="/checkout" href="#!">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
                   height="30"
                   fill="currentColor"
-                  class="bi bi-cart"
+                  className="bi bi-cart"
                   viewBox="0 0 24 24"
                 >
                   {" "}
@@ -197,13 +271,13 @@ function DownNav() {
                 )}
               </Link>
 
-              <Link to="/fav" class="flex items-center ">
+              <Link to="/fav" className="flex items-center ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
                   height="30"
                   fill="currentColor"
-                  class="bi bi-heart"
+                  className="bi bi-heart"
                   viewBox="0 0 24 24"
                 >
                   {" "}
@@ -211,38 +285,6 @@ function DownNav() {
                 </svg>
               </Link>
               <Link to="/register">
-                {/* <ul class="flex items-center hidden space-x-4 lg:flex">
-                  <div className="relative flex items-center flex-shrink-0">
-                    <img
-                      alt="profile-pic"
-                      src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png"
-                      className="w-8 h-8 rounded-full"
-                    />
-                    <p className="ml-2 font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400">
-                      {username}
-                    </p>
-                  </div>
-
-                  <li>
-                    {username ? (
-                      <span
-                        onClick={handleLogout}
-                        class="inline-flex items-center cursor-pointer justify-center px-3 py-2  font-medium tracking-wide text-blue-500 transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                      >
-                        Logout
-                      </span>
-                    ) : (
-                      <Link to="/register" aria-label="Sign up" title="Sign up">
-                        <span
-                          class="inline-flex items-center justify-center px-3 py-2 font-medium tracking-wide text-blue-500 transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
-                          aria-label="Sign up"
-                        >
-                          Sign up
-                        </span>
-                      </Link>
-                    )}
-                  </li>
-                </ul> */}
                 <div className="relative -mt-2">
                   <Link
                     ref={trigger}
@@ -257,10 +299,7 @@ function DownNav() {
                     </span>
 
                     <span className="h-8 w-8 rounded-full">
-                      <img
-                        src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png"
-                        alt="User"
-                      />
+                      <img src="/icons8-male-user-50.png" alt="User" />
                     </span>
 
                     <svg
@@ -370,14 +409,14 @@ function DownNav() {
               </Link>
             </div>
           </ul>
-          <div class="lg:hidden">
+          <div className="lg:hidden">
             <button
               aria-label="Open Menu"
               title="Open Menu"
-              class="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
+              className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
               onClick={() => setIsMenuOpen(true)}
             >
-              <svg class="w-5 text-gray-600" viewBox="0 0 24 24">
+              <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
                   d="M23,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,13,23,13z"
@@ -393,9 +432,9 @@ function DownNav() {
               </svg>
             </button>
             {isMenuOpen && (
-              <div class="absolute top-0 left-0 w-full">
-                <div class="p-5 bg-white  border rounded shadow-sm">
-                  <div class="flex items-center justify-between mb-4 ">
+              <div className="absolute top-0 left-0 w-full">
+                <div className="p-5 bg-white  border rounded shadow-sm">
+                  <div className="flex items-center justify-between mb-4 ">
                     <div className="">
                       <img
                         src="/logo (2) 1.png"
@@ -407,10 +446,10 @@ function DownNav() {
                       <button
                         aria-label="Close Menu"
                         title="Close Menu"
-                        class="p-2 -mt-2 -mr-2 transition duration-200 rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                        className="p-2 -mt-2 -mr-2 transition duration-200 rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <svg class="w-5 text-gray-600" viewBox="0 0 24 24">
+                        <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
                           <path
                             fill="currentColor"
                             d="M19.7,4.3c-0.4-0.4-1-0.4-1.4,0L12,10.6L5.7,4.3c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l6.3,6.3l-6.3,6.3 c-0.4,0.4-0.4,1,0,1.4C4.5,19.9,4.7,20,5,20s0.5-0.1,0.7-0.3l6.3-6.3l6.3,6.3c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3 c0.4-0.4,0.4-1,0-1.4L13.4,12l6.3-6.3C20.1,5.3,20.1,4.7,19.7,4.3z"
@@ -420,7 +459,7 @@ function DownNav() {
                     </div>
                   </div>
                   <nav>
-                    <ul class="space-y-4">
+                    <ul className="space-y-4">
                       <li>
                         <Link to="/">Home</Link>
                       </li>
@@ -428,40 +467,38 @@ function DownNav() {
                         <Link to="/about">About us</Link>
                       </li>
                       <li>
-                        <div className="relative cursor-pointer">
-                          <a onClick={toggleDropdown}>Product ⮟</a>
-                          {isMenuOpen && (
-                            <div className="absolute mt-2 -ml-6 bg-white z-50 border rounded shadow-md">
-                              <ul className="py-2 w-40 text-center">
-                                {categories.map((category, index) => (
-                                  <React.Fragment key={index}>
-                                    <li>
-                                      <Link
-                                        to={`/product/${category.category}`}
-                                      >
-                                        {category.category}
-                                      </Link>
-                                    </li>
-                                    <hr className="w-full border-gray-100" />
-                                  </React.Fragment>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
+                        <li>
+                          <div className="group inline-block">
+                            <button className="outline-none focus:outline-none px-3 py-1 bg-white rounded-sm flex items-center min-w-32">
+                              <span className="pr-1 flex-1">Product</span>
+                              <span>
+                                <svg
+                                  className="fill-current h-4 w-4 transform group-hover:-rotate-180 transition duration-150 ease-in-out"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                </svg>
+                              </span>
+                            </button>
+                            <ul className="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute transition duration-150 ease-in-out origin-top min-w-32">
+                              {renderCategories(categories)}
+                            </ul>
+                          </div>
+                        </li>
                       </li>
 
                       <li>
-                        <a class="" to="/collection">
-                          <a class="" href="#!">
+                        <a className="" to="/collection">
+                          <a className="" href="#!">
                             Career
                           </a>
                         </a>
                       </li>
 
                       <li>
-                        <a class="" to="/collection">
-                          <a class="" href="#!">
+                        <a className="" to="/collection">
+                          <a className="" href="#!">
                             Blog
                           </a>
                         </a>
@@ -472,7 +509,7 @@ function DownNav() {
                       <li>
                         <a
                           href="/"
-                          class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
                           aria-label="Sign up"
                           title="Sign up"
                         >

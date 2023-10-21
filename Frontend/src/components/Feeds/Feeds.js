@@ -32,18 +32,7 @@ function Feeds() {
                     className="object-cover w-full h-64"
                     alt=""
                   />
-                  <div className="p-5 border border-t-0">
-                    <p className="mb-3 text-xs font-semibold tracking-wide uppercase">
-                      <a
-                        href="/"
-                        className="transition-colors duration-200 text-blue-gray-900 hover:text-deep-purple-accent-700"
-                        aria-label="Category"
-                        title="traveling"
-                      >
-                        traveling
-                      </a>
-                      <span className="text-gray-600">— 28 Dec 2020</span>
-                    </p>
+                  <div className="p-5 ">
                     <a
                       href="/"
                       aria-label="Category"
@@ -52,7 +41,7 @@ function Feeds() {
                     >
                       <PrismicRichText field={article.data.heading} />
                     </a>
-                    <p className="mb-2 text-gray-700">
+                    <p className="mb-2 text-gray-700 line-clamp-2">
                       <PrismicRichText field={article.data.description} />
                     </p>
                     <a

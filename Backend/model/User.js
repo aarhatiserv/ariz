@@ -24,6 +24,27 @@ const cartSchema = new mongoose.Schema({
   },
 });
 
+const favSchema = new mongoose.Schema({
+  productName: {
+    type: String,
+  },
+  price: {
+    type: Number,
+  },
+  productSku: {
+    type: String,
+  },
+  size: {
+    type: String,
+  },
+  color: {
+    type: String,
+  },
+  imageUrl: {
+    type: String,
+  },
+});
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -49,6 +70,7 @@ const userSchema = new mongoose.Schema({
   },
 
   cart: [cartSchema],
+  fav: [favSchema],
 });
 
 module.exports = mongoose.model("User", userSchema);

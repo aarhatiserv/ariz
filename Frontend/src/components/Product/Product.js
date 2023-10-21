@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { useParams } from "react-router-dom";
 import Filter from "../Filter/Filter";
 
-function NewArrivalCollection({ page }) {
+function NewArrivalCollection() {
   const [userProducts, setUserProducts] = useState([]);
   const [showCount, setShowCount] = useState();
 
   // You can adjust the maximum number of items to display
   const [currentPage, setCurrentPage] = useState(0);
   const perPage = 6;
-  const { categorySlug } = useParams();
+  const { category, subcategory, subcategory1 } = useParams();
+  console.log(category, subcategory, subcategory1);
   const [carts, setCarts] = useState([]);
   const navigate = useNavigate();
 
@@ -29,7 +31,12 @@ function NewArrivalCollection({ page }) {
     }
   };
 
-  const pos = page;
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  console.log(params);
+
+  // const pos = page;
+  let page = category;
 
   useEffect(() => {
     axios
@@ -37,31 +44,33 @@ function NewArrivalCollection({ page }) {
         `https://ariz.onrender.com/api/userProduct/userProduct?limit=${showCount}`
       )
       .then((res) => {
-        if (page === "Saree") {
+        if (page === category) {
           let tempArr = [];
-          res.data.map((item) => {
-            if (item.category === "Saree") {
-              tempArr.push(item);
-            }
-          });
-          setUserProducts(tempArr);
-        }
-        if (page === "Top") {
-          let tempArr = [];
-          res.data.map((item) => {
-            if (item.category === "Top") {
-              tempArr.push(item);
-            }
-          });
-          setUserProducts(tempArr);
-        }
-        if (page === "Suit") {
-          let tempArr = [];
-          res.data.map((item) => {
-            if (item.category === "Suit") {
-              tempArr.push(item);
-            }
-          });
+          if (res.data.length != 0) {
+            res.data.map((item) => {
+              if (subcategory === undefined && subcategory1 === undefined) {
+                if (item.category === category) {
+                  tempArr.push(item);
+                }
+              } else if (subcategory1 === undefined) {
+                if (
+                  item.category === category &&
+                  item.subcategory === subcategory
+                ) {
+                  tempArr.push(item);
+                }
+              } else {
+                if (
+                  item.category === category &&
+                  item.subcategory === subcategory &&
+                  item.subcategory1 === subcategory1
+                ) {
+                  tempArr.push(item);
+                }
+              }
+            });
+          }
+
           setUserProducts(tempArr);
         }
         const filteredProducts = res.data.filter(
@@ -83,7 +92,7 @@ function NewArrivalCollection({ page }) {
       // Clean up the scroll event listener
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [pos]);
+  }, [category, subcategory, subcategory1]);
 
   const handlePageClick = (data) => {
     const selectedPage = data.selected;

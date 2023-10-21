@@ -35,15 +35,20 @@ const App = () => {
     <>
       <ScrollToTop />
       <Navbar />
-      <Navbar2 />
       <Navbar1 />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/product/Saree" element={<ProductPage page={"Saree"} />} />
-        <Route path="/product/Top" element={<ProductPage page={"Top"} />} />
-        <Route path="/product/Suit" element={<ProductPage page={"Suit"} />} />
+        <Route path="/product/:category" element={<ProductPage />} />
+        <Route
+          path="/product/:category/:subcategory"
+          element={<ProductPage />}
+        />
+        <Route
+          path="/product/:category/:subcategory/:subcategory1"
+          element={<ProductPage />}
+        />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/newArrival" element={<NewArrivalCollectionPage />} />
         <Route path="/trending" element={<TrendingCollectionPage />} />

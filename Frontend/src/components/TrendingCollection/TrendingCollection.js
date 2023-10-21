@@ -151,7 +151,7 @@ function TrendingCollection() {
             <div class=" py-6 sm:py-8 lg:py-0">
               <div class="mx-auto max-w-screen-lg px-4 md:px-6">
                 <div class="grid gap-x-4 gap-y-10 grid-cols-2  sm:grid-cols-2 md:gap-x-6 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3">
-                  {trendings.slice(0, showCount).map((trending, index) => (
+                  {/* {trendings.slice(0, showCount).map((trending, index) => (
                     <div key={trending._id} className="mb-6">
                       <button
                         onClick={() =>
@@ -167,9 +167,6 @@ function TrendingCollection() {
                           alt=""
                           class="h-full w-full border object-center transition duration-200 group-hover:scale-110"
                         />
-                        <span className="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">
-                          Sale
-                        </span>
                       </button>
 
                       <div className="flex gap-2 px-2">
@@ -194,6 +191,58 @@ function TrendingCollection() {
                         </button>
                       </div>
                     </div>
+                  ))} */}
+
+                  {trendings.slice(0, showCount).map((trending, index) => (
+                    <>
+                      <div
+                        key={index}
+                        className="flex flex-col h-full justify-between "
+                      >
+                        <button
+                          onClick={() =>
+                            navigate(`/productdetail/${trending._id}`, {
+                              state: [trending],
+                            })
+                          }
+                          // class={`group relative mb-2 block h-80  sm:h-[480px] overflow-hidden rounded bg-gray-100 shadow-md  lg:mb-3 ${
+                          //   selectedNewArrivals.includes(newArrival._id)
+                          //     ? "border-4 border-primary"
+                          //     : ""
+                          // }`}
+                        >
+                          <img
+                            src={trending.variant[0].image[0]}
+                            loading="lazy"
+                            alt=""
+                            class="h-full w-full  object-center transition duration-200 group-hover:scale-110"
+                          />
+                        </button>
+
+                        <div class="flex items-center justify-center gap-2 px-2">
+                          <div class="flex flex-col">
+                            <a
+                              href="!#"
+                              class="text-lg font-semibold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
+                            >
+                              {trending.variant[variantSelected].productName}
+                            </a>
+                            <span class="text-gray-500 py-1 text-lg font-semibold">
+                              {" "}
+                              Rs {trending.variant[variantSelected].price}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="py-2">
+                          <button
+                            onClick={() => handleAddtoCart(trending)}
+                            className="bg-gray-400 rounded text-black font-semibold  py-4 px-4 w-full"
+                          >
+                            Add to Product
+                          </button>
+                        </div>
+                      </div>
+                    </>
                   ))}
                 </div>
               </div>

@@ -15,10 +15,12 @@ const product = require("./router/product");
 const coupon = require("./router/coupon");
 const category = require("./router/category");
 const cart = require("./router/cart");
+const fav = require("./router/fav");
 const banner = require("./router/banner");
 const banner2 = require("./router/banner2");
 const orders = require("./router/orders");
 const email = require("./email");
+const mail = require("./mail");
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -46,10 +48,12 @@ app.use("/api/product", product);
 app.use("/api/coupon", coupon);
 app.use("/api/category", category);
 app.use("/api/cart", cart);
+app.use("/api/fav", fav);
 app.use("/api/banner", banner);
 app.use("/api/banner2", banner2);
 app.use("/api/order", orders);
 app.use("/api/email", email);
+app.use("/api/mail", mail);
 // app.use("/api/mail", ShipDetail);
 
 // Callback function to listen to changes unless manually exited.
