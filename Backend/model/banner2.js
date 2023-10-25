@@ -4,6 +4,9 @@ const banner2Schema = new mongoose.Schema({
   imageUrl: {
     type: String,
   },
+  category: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Banner2", banner2Schema);
