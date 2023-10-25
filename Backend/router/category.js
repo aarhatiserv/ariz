@@ -41,19 +41,45 @@ router.get("/category/:category", async (req, res) => {
 router.post("/category", (req, res) => {
   const { category, subcategory, subcategory1, imageUrl } = req.body;
 
-  const product = new Different({
-    category,
-    subcategory,
-    subcategory1,
-    imageUrl,
-  });
-
-  product.save((err) => {
+  // Search for an existing category by name
+  Different.findOne({ category }, (err, existingCategory) => {
     if (err) {
       console.log(err);
-      res.status(500).send("An error occurred while adding the product.", err);
+      res
+        .status(500)
+        .send("An error occurred while checking for the category.", err);
+    } else if (existingCategory) {
+      // If category exists, update the image URL
+      existingCategory.imageUrl = imageUrl;
+      existingCategory.save((err) => {
+        if (err) {
+          console.log(err);
+          res
+            .status(500)
+            .send("An error occurred while updating the image URL.", err);
+        } else {
+          res.send("Image URL updated for existing category.");
+        }
+      });
     } else {
-      res.send("Product added successfully.");
+      // If category doesn't exist, create a new entry
+      const product = new Different({
+        category,
+        subcategory,
+        subcategory1,
+        imageUrl,
+      });
+
+      product.save((err) => {
+        if (err) {
+          console.log(err);
+          res
+            .status(500)
+            .send("An error occurred while adding the product.", err);
+        } else {
+          res.send("Product added successfully.");
+        }
+      });
     }
   });
 });
