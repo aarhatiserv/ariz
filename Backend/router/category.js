@@ -49,16 +49,17 @@ router.post("/category", (req, res) => {
         .status(500)
         .send("An error occurred while checking for the category.", err);
     } else if (existingCategory) {
-      // If category exists, update the image URL
+      existingCategory.subcategory = subcategory;
+      existingCategory.subcategory1 = subcategory1;
       existingCategory.imageUrl = imageUrl;
       existingCategory.save((err) => {
         if (err) {
           console.log(err);
           res
             .status(500)
-            .send("An error occurred while updating the image URL.", err);
+            .send("An error occurred while updating the category.", err);
         } else {
-          res.send("Image URL updated for existing category.");
+          res.send("Category updated successfully.");
         }
       });
     } else {
