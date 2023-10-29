@@ -1,15 +1,27 @@
 const mongoose = require("mongoose");
 
-const differentSchema = new mongoose.Schema({
-  category: {
+const subcategory1Schema = new mongoose.Schema({
+  name: {
     type: String,
   },
-  subcategory: {
-    type: String, // You can change the data type to match your requirements
+});
+
+const subcategorySchema = new mongoose.Schema({
+  name: {
+    type: String,
   },
-  subcategory1: {
-    type: String, // You can change the data type to match your requirements
+  subcategories1: [subcategory1Schema],
+});
+
+const categorySchema = new mongoose.Schema({
+  name: {
+    type: String,
   },
+  subcategory: [subcategorySchema],
+});
+
+const differentSchema = new mongoose.Schema({
+  category: categorySchema,
   imageUrl: {
     type: String,
   },

@@ -31,7 +31,7 @@ router.get("/category", (req, res) => {
 router.get("/category/:category", async (req, res) => {
   try {
     const category = req.params.category;
-    const count = await Different.countDocuments({ category }); // Assuming you have a 'category' field in your product schema
+    const count = await Different.countDocuments({ category });
     res.json({ count });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
@@ -39,19 +39,60 @@ router.get("/category/:category", async (req, res) => {
 });
 
 router.post("/category", (req, res) => {
-  const { category, subcategory, subcategory1, imageUrl } = req.body;
+  const { category, subcategory, subcategories1, imageUrl } = req.body;
 
-  // Search for an existing category by name
-  Different.findOne({ category }, (err, existingCategory) => {
+  console.log(
+    `Adding category with name: ${category}, subcategory: ${subcategory}, subcategories1: ${subcategories1}, and imageUrl: ${imageUrl}.`
+  );
+
+  const categoryQuery = { "category.name": category };
+
+  Different.findOne(categoryQuery, (err, existingCategory) => {
     if (err) {
       console.log(err);
       res
         .status(500)
         .send("An error occurred while checking for the category.", err);
     } else if (existingCategory) {
-      existingCategory.subcategory = subcategory;
-      existingCategory.subcategory1 = subcategory1;
-      existingCategory.imageUrl = imageUrl;
+      if (subcategory) {
+        const subcategoryIndex =
+          existingCategory.category.subcategory.findIndex(
+            (subcat) => subcat.name === subcategory
+          );
+        if (subcategoryIndex !== -1) {
+          if (subcategories1) {
+            const subcat1Index = existingCategory.category.subcategory[
+              subcategoryIndex
+            ].subcategories1.findIndex(
+              (subcat1) => subcat1.name === subcategories1
+            );
+            if (subcat1Index === -1) {
+              // Push subcategories1 if not found
+              existingCategory.category.subcategory[
+                subcategoryIndex
+              ].subcategories1.push({
+                name: subcategories1,
+              });
+            }
+          }
+        } else {
+          existingCategory.category.subcategory.push({
+            name: subcategory,
+            subcategories1: subcategories1
+              ? [
+                  {
+                    name: subcategories1,
+                  },
+                ]
+              : [],
+          });
+        }
+      }
+
+      if (imageUrl) {
+        existingCategory.imageUrl = imageUrl;
+      }
+
       existingCategory.save((err) => {
         if (err) {
           console.log(err);
@@ -63,22 +104,35 @@ router.post("/category", (req, res) => {
         }
       });
     } else {
-      // If category doesn't exist, create a new entry
-      const product = new Different({
-        category,
-        subcategory,
-        subcategory1,
+      const newCategory = new Different({
+        category: {
+          name: category,
+          subcategory: subcategory
+            ? [
+                {
+                  name: subcategory,
+                  subcategories1: subcategories1
+                    ? [
+                        {
+                          name: subcategories1,
+                        },
+                      ]
+                    : [],
+                },
+              ]
+            : [],
+        },
         imageUrl,
       });
 
-      product.save((err) => {
+      newCategory.save((err) => {
         if (err) {
           console.log(err);
           res
             .status(500)
-            .send("An error occurred while adding the product.", err);
+            .send("An error occurred while adding the category.", err);
         } else {
-          res.send("Product added successfully.");
+          res.send("Category added successfully.");
         }
       });
     }
