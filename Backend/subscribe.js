@@ -2,6 +2,7 @@ const router = require("express").Router();
 const nodemailer = require("nodemailer");
 
 router.post("/subscribe", (req, res) => {
+  const name = req.body.name;
   const email = req.body.email;
 
   console.log({ ...req.body });
@@ -26,7 +27,8 @@ router.post("/subscribe", (req, res) => {
     from: name,
     to: "arizgarments91@gmail.com",
     subject: "User Subscribe for the newsletter",
-    html: `<p>Email: ${email}</p>`,
+    html: `<p>Name: ${name}</p>
+           <p>Email: ${email}</p>`,
   };
 
   contactEmail.sendMail(mail, (error, info) => {
