@@ -3,11 +3,9 @@ const nodemailer = require("nodemailer");
 
 router.post("/mail", (req, res) => {
   const name = req.body.name;
-
   const city = req.body.city;
   const email = req.body.email;
   const mobile = req.body.mobile;
-
   const description = req.body.description;
 
   console.log({ ...req.body });
@@ -31,14 +29,12 @@ router.post("/mail", (req, res) => {
   const mail = {
     from: name,
     to: "arizgarments91@gmail.com",
-    subject: "Ariz Help Box",
+    subject: "Contact Feedback",
     html: `<p>Name: ${name}</p>
              <p>Email: ${email}</p>
              <p>Mobile Number: ${mobile}</p>
-       >
              <p>City: ${city}</p>
-         
-             <p>Business Details: ${description}</p>`,
+             <p>Description: ${description}</p>`,
   };
 
   contactEmail.sendMail(mail, (error, info) => {

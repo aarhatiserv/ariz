@@ -64,8 +64,8 @@ router.post("/verification", async (req, res) => {
 router.post("/create-order", async (req, res) => {
   try {
     const instance = new Razorpay({
-      key_id: "rzp_test_ms99YcEe3TbTKB", // Replace with your Razorpay key ID
-      key_secret: "CjMEMFuggsRCCNh8WpyVNnkK", // Replace with your Razorpay key secret
+      key_id: "rzp_live_SJPTVSrz4jSo3g", // Replace with your Razorpay key ID
+      key_secret: "O2CPOrABPhWUIf9Titxx6mM4", // Replace with your Razorpay key secret
     });
 
     const options = {
