@@ -21,6 +21,7 @@ const banner2 = require("./router/banner2");
 const orders = require("./router/orders");
 const email = require("./email");
 const mail = require("./mail");
+const subscribe = require("./subscribe");
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -54,6 +55,7 @@ app.use("/api/banner2", banner2);
 app.use("/api/order", orders);
 app.use("/api/email", email);
 app.use("/api/mail", mail);
+app.use("/api/subscribe", subscribe);
 // app.use("/api/mail", ShipDetail);
 
 // Callback function to listen to changes unless manually exited.
