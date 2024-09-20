@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const userProduct = require("../model/userProduct");
 const mongoose = require("mongoose");
-const { nanoid } = require("nanoid");
 
 router.get("/userProduct", (req, res) => {
   userProduct.find((err, products) => {
